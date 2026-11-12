@@ -1,0 +1,1760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#02050c">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Nexus Family Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+<script>"__RUNTIME_CONFIG__";</script>
+<style>
+:root{
+  --bg0:#02050c;--bg1:#061229;
+  --panel:rgba(7,20,42,.78);--panel2:rgba(11,28,58,.9);
+  --line:rgba(90,210,255,.28);--line2:rgba(90,210,255,.12);
+  --cyan:#3ee8ff;--violet:#9d7dff;--magenta:#ff3fa4;--amber:#ffc54d;--green:#3dffa8;--red:#ff4d6d;
+  --text:#e2f6ff;--dim:#8fb0cc;--faint:#4f6d8a;
+  --fd:'Orbitron',system-ui,sans-serif;--fu:'Rajdhani',system-ui,sans-serif;--fs:'Tiro Devanagari Sanskrit','Noto Sans Devanagari',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;color:var(--text);font-family:var(--fu);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+body{background:radial-gradient(1100px 650px at 72% -12%,#0c2a58 0%,transparent 62%),radial-gradient(900px 620px at -12% 112%,#1d0c44 0%,transparent 60%),var(--bg0)}
+#stars{position:fixed;left:0;top:0;width:1px;height:1px;border-radius:50%;animation:drift 240s linear infinite;opacity:.85}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+#floor{position:fixed;left:-25%;right:-25%;bottom:-6vh;height:48vh;background:
+  linear-gradient(rgba(62,232,255,.22) 1px,transparent 1px) 0 0/60px 60px,
+  linear-gradient(90deg,rgba(62,232,255,.22) 1px,transparent 1px) 0 0/60px 60px;
+  transform:perspective(420px) rotateX(68deg);transform-origin:50% 100%;opacity:.22;
+  -webkit-mask-image:linear-gradient(transparent,#000 70%);mask-image:linear-gradient(transparent,#000 70%)}
+
+#stage{position:absolute;left:50%;top:50%;width:960px;height:600px;transform:translate(-50%,-50%);transform-origin:50% 50%}
+#scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);z-index:50}
+
+/* ---------- panels ---------- */
+.panel{position:absolute;border:1px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+             linear-gradient(140deg,rgba(62,232,255,.6),rgba(62,232,255,.08) 35%,rgba(157,125,255,.08) 70%,rgba(157,125,255,.55)) border-box;
+  clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.panel::before,.panel::after{content:"";position:absolute;width:20px;height:2px;transform:rotate(-45deg)}
+.panel::before{left:-3px;top:6px;background:var(--cyan)}
+.panel::after{right:-3px;bottom:6px;background:var(--violet)}
+.ptitle{font-family:var(--fd);font-size:9px;font-weight:700;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.ptitle::before{content:"";flex:none;width:7px;height:7px;background:currentColor;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.ptitle .r{margin-left:auto;color:var(--dim);letter-spacing:2px;font-weight:500}
+
+/* ---------- header ---------- */
+#hdr{position:absolute;left:10px;right:10px;top:6px;height:40px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line2)}
+#logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+#logo svg{width:34px;height:34px}
+#logo .t1{font-family:var(--fd);font-weight:900;font-size:17px;letter-spacing:5px;line-height:1;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+#logo .t2{font-family:var(--fd);font-size:7.5px;letter-spacing:3.2px;color:var(--dim);margin-top:4px}
+#ticker{flex:1;min-width:0;display:flex;align-items:center;gap:10px;justify-content:center;font-family:var(--fd);font-size:11px;letter-spacing:2.5px;color:var(--text)}
+#ticker .car{color:var(--cyan);animation:blink 1.1s steps(1) infinite}
+#tickTxt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s}
+@keyframes blink{50%{opacity:0}}
+#hdrR{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-size:10px;letter-spacing:2px}
+.pill{display:flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid var(--line);background:rgba(4,14,30,.7);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.dot.warn{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.dot.bad{background:var(--red);box-shadow:0 0 8px var(--red)}
+#snd{cursor:pointer;color:var(--amber);border-color:rgba(255,197,77,.45)}
+#snd.on{color:var(--dim);border-color:var(--line)}
+
+/* ---------- clock reactor ---------- */
+#pClock{left:10px;top:54px;width:284px;height:300px}
+#reactor{position:absolute;left:50%;top:10px;width:240px;height:240px;margin-left:-120px}
+#reactor svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.spin{transform-origin:0 0;animation:spin 90s linear infinite}
+.spin.rev{animation-duration:50s;animation-direction:reverse}
+.spin.fast{animation-duration:14s}
+@keyframes spin{to{transform:rotate(360deg)}}
+#secArc{transition:stroke-dashoffset 1s linear}
+#clockTxt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#cDay{font-family:var(--fd);font-size:9.5px;letter-spacing:5px;color:var(--cyan);margin-bottom:2px}
+#cTime{font-family:var(--fd);font-weight:700;font-size:48px;line-height:1;letter-spacing:1px;text-shadow:0 0 18px rgba(62,232,255,.55)}
+#cTime .ap{font-size:12px;letter-spacing:2px;color:var(--cyan);margin-left:4px;vertical-align:top;position:relative;top:6px}
+#cSec{font-family:var(--fd);font-size:13px;color:var(--violet);letter-spacing:2px;margin-top:4px}
+#cDate{font-family:var(--fd);font-size:11px;letter-spacing:3px;color:var(--dim);margin-top:6px}
+#cTithi{font-size:11px;letter-spacing:1px;color:var(--amber);margin-top:3px;max-width:150px;line-height:1.1}
+#sky{position:absolute;left:14px;right:14px;bottom:10px;height:36px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line2);padding-top:6px;font-family:var(--fd);font-size:10px;letter-spacing:1px;color:var(--dim)}
+#sky b{color:var(--text);font-weight:500;font-size:11px}
+#sky .it{display:flex;align-items:center;gap:6px}
+#sky svg{width:18px;height:18px}
+
+/* ---------- next priority ---------- */
+#pNext{left:10px;top:362px;width:284px;height:112px;padding:10px 14px}
+#pNext.hot{background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(140deg,rgba(255,63,164,.9),rgba(255,63,164,.12) 40%,rgba(255,77,109,.7)) border-box}
+#pNext.hot .ptitle{color:var(--magenta)}
+#pNext.hot::before{background:var(--magenta)}
+#nxTitle{font-weight:700;font-size:18px;line-height:1.1;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nxMeta{font-size:12px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.5px}
+#nxCount{font-family:var(--fd);font-size:10px;letter-spacing:2px;color:var(--dim);margin-top:7px;display:flex;align-items:baseline;gap:3px}
+#nxCount b{font-size:19px;color:var(--text);font-weight:700;letter-spacing:1px;margin-left:5px}
+#pNext.hot #nxCount b{color:#ffd6ea;text-shadow:0 0 12px rgba(255,63,164,.7)}
+.hotPulse{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 92% 18%,rgba(255,63,164,.35),transparent 45%);animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.25}}
+
+/* ---------- weather ---------- */
+#pWx{left:10px;top:482px;width:284px;height:108px;padding:10px 14px}
+#wxMain{display:flex;align-items:center;gap:10px;margin-top:6px}
+#wxMain svg{width:44px;height:44px;flex:none}
+.wxc{min-width:0;flex:1}
+#wxTemp{font-family:var(--fd);font-size:28px;font-weight:700;line-height:1}
+#wxTemp small{font-size:12px;color:var(--cyan)}
+#wxLbl{font-size:13px;color:var(--text);font-weight:600;line-height:1.1;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#wxSub{display:none}
+#wxDays{margin-left:auto;display:flex;gap:8px;flex:none}
+.wd{display:flex;flex-direction:column;align-items:center;font-family:var(--fd);font-size:8.5px;letter-spacing:1px;color:var(--dim)}
+.wd svg{width:20px;height:20px;margin:2px 0}
+.wd b{font-size:10px;color:var(--text);font-weight:500}
+#wxFoot{position:absolute;left:14px;right:14px;bottom:8px;font-family:var(--fd);font-size:8px;letter-spacing:1.2px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#wxMain{margin-top:4px !important;line-height:1.05}
+#wxMain > svg, #wxIcon svg{width:40px !important;height:40px !important}
+.wd{line-height:1.05}
+.wd svg{margin:1px 0 !important;width:18px !important;height:18px !important}
+
+/* ---------- week ---------- */
+#pWeek{left:304px;top:54px;width:646px;height:390px;padding:10px 10px 8px}
+#cols{position:absolute;left:10px;right:10px;top:30px;bottom:9px;display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.col{position:relative;display:flex;flex-direction:column;min-width:0;background:rgba(255,255,255,.018);border:1px solid var(--line2);cursor:pointer}
+.col.today{border-color:rgba(62,232,255,.6);background:linear-gradient(180deg,rgba(62,232,255,.10),rgba(62,232,255,.02) 40%);box-shadow:0 0 18px rgba(62,232,255,.15) inset}
+.col.wkend .dow{color:var(--violet)}
+.ch{padding:6px 6px 5px;border-bottom:1px solid var(--line2);display:flex;align-items:flex-end;justify-content:space-between}
+.dow{font-family:var(--fd);font-size:8.5px;letter-spacing:2px;color:var(--dim)}
+.dnum{font-family:var(--fd);font-size:20px;font-weight:700;line-height:1;margin-top:2px}
+.col.today .dnum{color:var(--cyan);text-shadow:0 0 12px rgba(62,232,255,.6)}
+.cw{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--fd);font-size:9px;color:var(--dim)}
+.cw svg{width:17px;height:17px}
+.tag{position:absolute;top:-1px;right:-1px;font-family:var(--fd);font-size:6.5px;letter-spacing:1.5px;background:var(--cyan);color:#02050c;padding:2px 4px;font-weight:700}
+.evs{flex:1;min-height:0;overflow:hidden;padding:5px 4px 2px}
+.ev{position:relative;padding:3px 4px 4px 6px;margin-bottom:4px;background:rgba(9,28,58,.85);border-left:2px solid var(--mc,var(--violet))}
+.ev .tm{font-family:var(--fd);font-size:8.5px;letter-spacing:.6px;color:var(--mc,var(--violet));display:flex;align-items:center;gap:4px}
+.ev .tm svg{width:10px;height:10px;flex:none}
+.ev .nm{font-size:12.5px;font-weight:600;line-height:1.12;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.ev .who{font-family:var(--fd);font-size:7px;letter-spacing:1.5px;color:var(--dim);margin-top:1px;text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.ev.imp{background:linear-gradient(90deg,rgba(255,63,164,.26),rgba(9,28,58,.85) 85%);border-left-color:var(--magenta)}
+.ev.imp .tm{color:#ff9fd0}
+.ev.imp::after{content:"";position:absolute;inset:0;border:1px solid var(--magenta);animation:breathe 2s ease-in-out infinite;pointer-events:none}
+.ev.past{opacity:.35}
+.ev.past::after{display:none}
+.ev.now{box-shadow:inset 0 0 0 1px var(--green)}
+.ev.now .tm::after{content:"LIVE";margin-left:auto;font-size:6.5px;background:var(--green);color:#02050c;padding:1px 3px;font-weight:700}
+.hol{padding:3px 5px;margin-bottom:4px;font-size:11px;font-weight:700;line-height:1.1;color:var(--amber);background:linear-gradient(90deg,rgba(255,197,77,.22),rgba(255,197,77,.04));border-left:2px solid var(--amber);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hol.obs{color:#e8cf95;font-weight:600;border-left-color:rgba(255,197,77,.45);background:rgba(255,197,77,.06)}
+.more{font-family:var(--fd);font-size:8px;letter-spacing:1.5px;color:var(--cyan);text-align:center;padding:2px 0}
+.empty{font-family:var(--fd);font-size:7.5px;letter-spacing:2px;color:var(--faint);text-align:center;margin-top:18px;line-height:1.8}
+
+/* ---------- transmission ---------- */
+#pTx{left:304px;top:452px;width:646px;height:138px}
+#txSide{position:absolute;left:0;top:0;bottom:0;width:28px;border-right:1px solid var(--line2);display:flex;align-items:center;justify-content:center}
+#txSide span{transform:rotate(-90deg);font-family:var(--fd);font-size:7.5px;letter-spacing:3px;color:var(--faint);white-space:nowrap}
+#txBody{position:absolute;left:40px;right:14px;top:10px;bottom:10px}
+#txHead{display:flex;align-items:center}
+#txDots{margin-left:auto;display:flex;gap:5px}
+#txDots i{width:14px;height:3px;background:var(--line2)}
+#txDots i.on{background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+#txSlide{position:absolute;left:0;right:0;top:20px;bottom:0;transition:opacity .6s,transform .6s}
+#txSlide.out{opacity:0;transform:translateY(6px)}
+.q{font-size:19px;font-weight:600;line-height:1.22;margin-top:6px;max-height:72px;overflow:hidden}
+.q.big{font-size:22px}
+.by{font-family:var(--fd);font-size:9px;letter-spacing:2px;color:var(--violet);margin-top:6px}
+.mWrap{display:flex;gap:14px;align-items:center;height:100%}
+.mTxt{flex:1;min-width:0}
+.dev{font-family:var(--fs);font-size:19px;line-height:1.35;color:#fff3d6;text-shadow:0 0 14px rgba(255,197,77,.35)}
+.mMean{font-size:12px;color:var(--dim);margin-top:3px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.play{flex:none;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,197,77,.6);display:grid;place-items:center;position:relative;cursor:pointer;background:radial-gradient(circle,rgba(255,197,77,.18),transparent 70%)}
+.play::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(255,197,77,.45);animation:spin 18s linear infinite}
+.play svg{width:22px;height:22px;margin-left:3px}
+.play small{position:absolute;bottom:-14px;font-family:var(--fd);font-size:7px;letter-spacing:2px;color:var(--amber);white-space:nowrap}
+.ans{font-family:var(--fd);font-size:14px;letter-spacing:2px;color:var(--green);margin-top:8px;min-height:18px}
+.ans .lbl{font-size:8px;color:var(--faint);letter-spacing:3px;margin-right:8px}
+
+/* ---------- overlays ---------- */
+.ov{position:absolute;inset:0;z-index:40;display:none}
+.ov.show{display:block}
+#dayOv{background:rgba(2,5,12,.88)}
+#dayOv .panel{left:120px;right:120px;top:40px;bottom:40px;padding:16px 20px;overflow:hidden;background:linear-gradient(var(--panel2),var(--panel2)) padding-box,linear-gradient(140deg,rgba(62,232,255,.7),rgba(157,125,255,.6)) border-box}
+#dayList{position:absolute;left:20px;right:20px;top:46px;bottom:14px;overflow-y:auto}
+.dl{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line2)}
+.dl .t{width:96px;flex:none;font-family:var(--fd);font-size:11px;color:var(--mc,var(--cyan));letter-spacing:1px}
+.dl .n{font-size:17px;font-weight:700;line-height:1.15}
+.dl .m{font-size:12.5px;color:var(--dim);margin-top:2px;white-space:pre-line;max-height:46px;overflow:hidden}
+.dl.imp .n{color:#ffc4e3}
+.x{position:absolute;right:16px;top:12px;font-family:var(--fd);font-size:10px;letter-spacing:2px;color:var(--dim);border:1px solid var(--line);padding:6px 10px;cursor:pointer}
+
+#alertOv{background:radial-gradient(circle at 50% 45%,#3d0620 0%,#16040f 45%,#02050c 75%)}
+#alertOv .rings{position:absolute;left:50%;top:44%;width:0;height:0}
+#alertOv .rings i{position:absolute;left:-150px;top:-150px;width:300px;height:300px;border-radius:50%;border:2px solid var(--magenta);opacity:0;animation:ring 3s ease-out infinite}
+#alertOv .rings i:nth-child(2){animation-delay:1s}
+#alertOv .rings i:nth-child(3){animation-delay:2s}
+@keyframes ring{0%{transform:scale(.3);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+#alertBox{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:620px;text-align:center}
+#alertBox .k{font-family:var(--fd);font-size:12px;letter-spacing:8px;color:var(--magenta);animation:blink 1s steps(1) infinite}
+#alertBox .ic{width:74px;height:74px;margin:14px auto 6px;color:#ffd6ea}
+#alertBox .n{font-size:38px;font-weight:700;line-height:1.05;margin-top:4px;text-shadow:0 0 24px rgba(255,63,164,.6)}
+#alertBox .w{font-family:var(--fd);font-size:13px;letter-spacing:3px;color:var(--dim);margin-top:10px}
+#alertBox .c{font-family:var(--fd);font-size:30px;font-weight:700;color:#ffd6ea;margin-top:14px;letter-spacing:2px}
+#alertBox .btn{display:inline-block;margin-top:24px;padding:14px 34px;font-family:var(--fd);font-size:13px;letter-spacing:4px;color:#02050c;background:var(--magenta);font-weight:700;cursor:pointer;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}
+
+#mantraOv{background:radial-gradient(circle at 50% 50%,#2b1705 0%,#120b07 45%,#02050c 75%)}
+#mantraOv .halo{position:absolute;left:50%;top:50%;width:520px;height:520px;margin:-260px 0 0 -260px;opacity:.55}
+#mantraOv .halo svg{width:100%;height:100%;overflow:visible}
+#mBox{position:absolute;left:60px;right:60px;top:50%;transform:translateY(-50%);text-align:center}
+#mBox .k{font-family:var(--fd);font-size:10px;letter-spacing:6px;color:var(--amber)}
+#mBox .ttl{font-family:var(--fs);font-size:22px;color:#ffe6b0;margin-top:4px}
+#mLines{margin-top:16px}
+#mLines .ln{font-family:var(--fs);font-size:27px;line-height:1.45;color:rgba(255,243,214,.38);transition:color .5s,text-shadow .5s}
+#mLines .ln.on{color:#fff3d6;text-shadow:0 0 22px rgba(255,197,77,.85)}
+#mLines .tr{font-size:13px;color:rgba(143,176,204,.55);letter-spacing:.5px;margin-bottom:4px}
+#mLines .ln.on + .tr{color:var(--dim)}
+#mMean{font-size:14px;color:var(--dim);margin-top:14px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.3}
+#mRep{font-family:var(--fd);font-size:9px;letter-spacing:3px;color:var(--amber);margin-top:10px}
+
+#briefOv{z-index:39;background:radial-gradient(ellipse at 50% 125%,#6b3208 0%,#2a1606 34%,#070a12 66%,#02050c 100%);overflow:hidden}
+#briefOv .sun{position:absolute;left:50%;bottom:-300px;width:600px;height:600px;margin-left:-300px;border-radius:50%;background:radial-gradient(circle,rgba(255,206,99,.9) 0%,rgba(255,150,50,.45) 30%,rgba(255,120,40,0) 66%);animation:sunrise 7s cubic-bezier(.2,.7,.2,1) both}
+#briefOv .rays{position:absolute;left:50%;bottom:-300px;width:600px;height:600px;margin-left:-300px;opacity:.18;animation:spin 240s linear infinite}
+@keyframes sunrise{from{transform:translateY(160px);opacity:0}to{transform:translateY(0);opacity:.75}}
+#bBox{position:absolute;left:64px;right:64px;top:34px;bottom:34px}
+#bBox .k{font-family:var(--fd);font-size:11px;letter-spacing:7px;color:var(--amber)}
+#bBox .hi{font-size:42px;font-weight:700;color:#fff3d6;line-height:1.1;margin-top:6px;text-shadow:0 0 26px rgba(255,197,77,.45)}
+#bBox .hi .sa{font-family:var(--fs);font-size:24px;font-weight:400;color:#ffd98a;margin-left:12px}
+#bBox .dt{font-family:var(--fd);font-size:12px;letter-spacing:3px;color:var(--dim);margin-top:6px}
+#bBox .dt b{color:#ffd98a;font-weight:500}
+#bGrid{display:flex;gap:26px;margin-top:22px}
+#bWx{width:220px;flex:none;padding:14px 16px;background:rgba(8,18,36,.72);border:1px solid rgba(255,197,77,.28)}
+#bWx .ic{width:46px;height:46px}
+#bWx .t{font-family:var(--fd);font-size:44px;font-weight:700;color:#fff3d6;line-height:1}
+#bWx .c{font-size:17px;font-weight:600;margin-top:4px}
+#bWx .m{font-family:var(--fd);font-size:10px;letter-spacing:1.5px;color:var(--dim);margin-top:8px;line-height:1.9}
+#bList{flex:1;min-width:0}
+#bList .h{font-family:var(--fd);font-size:10px;letter-spacing:4px;color:var(--cyan);margin-bottom:4px}
+.bl{display:flex;gap:14px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line2)}
+.bl .t{width:84px;flex:none;font-family:var(--fd);font-size:11px;letter-spacing:1px;color:var(--mc,var(--cyan))}
+.bl .n{font-size:19px;font-weight:700;line-height:1.15;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.bl .w{font-family:var(--fd);font-size:9px;letter-spacing:2px;color:var(--mc,var(--dim));margin-top:2px}
+.bl.imp .n{color:#ffc4e3}
+.bl.fest .n{color:var(--amber)}
+#bList .none{font-size:18px;color:var(--dim);padding:10px 0}
+#bQuote{position:absolute;left:0;right:250px;bottom:0;font-size:15px;color:#d7c3a0;font-style:italic;line-height:1.35}
+#bQuote span{display:block;font-style:normal;font-family:var(--fd);font-size:9px;letter-spacing:3px;color:var(--amber);margin-top:4px}
+#bGo{position:absolute;right:0;bottom:0;padding:14px 30px;font-family:var(--fd);font-size:12px;letter-spacing:4px;color:#02050c;background:var(--amber);font-weight:700;cursor:pointer;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}
+#bGo i{font-style:normal;opacity:.6;margin-left:8px}
+
+#nightOv{background:#000;z-index:45}
+#nightClock{position:absolute;text-align:center;transition:left 2s,top 2s;opacity:.32}
+#nightClock .t{font-family:var(--fd);font-size:84px;font-weight:700;color:#5f8fb0;letter-spacing:2px}
+#nightClock .d{font-family:var(--fd);font-size:12px;letter-spacing:5px;color:#3d5d78;margin-top:4px}
+#nightClock .n{font-size:15px;color:#3d5d78;margin-top:12px}
+
+#bootOv{background:var(--bg0);z-index:48;display:block;transition:opacity .8s}
+#bootOv.hide{opacity:0;pointer-events:none}
+#bootTxt{position:absolute;left:60px;top:150px;font-family:var(--fd);font-size:12px;letter-spacing:2px;line-height:2.1;color:var(--cyan);white-space:pre}
+#bootTxt .ok{color:var(--green)}
+#bootTxt .wn{color:var(--amber)}
+#bootBar{position:absolute;left:60px;right:60px;top:430px;height:3px;background:var(--line2)}
+#bootBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));box-shadow:0 0 12px var(--cyan);transition:width 2.2s cubic-bezier(.2,.7,.2,1)}
+
+#toast{position:absolute;right:20px;bottom:20px;width:300px;z-index:42;padding:12px 14px;display:none;background:linear-gradient(var(--panel2),var(--panel2)) padding-box,linear-gradient(140deg,var(--green),rgba(62,232,255,.3)) border-box}
+#toast.show{display:block;animation:slideIn .5s ease-out}
+@keyframes slideIn{from{transform:translateX(30px);opacity:0}}
+#toast .ptitle{color:var(--green)}
+#toast .n{font-size:17px;font-weight:700;margin-top:5px;line-height:1.1}
+#toast .m{font-size:12px;color:var(--dim);margin-top:2px}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div id="floor"></div>
+
+<div id="stage">
+  <!-- header -->
+  <div id="hdr">
+    <div id="logo" title="Refresh">
+      <svg viewBox="-20 -20 40 40" aria-hidden="true">
+        <polygon points="0,-18 15.6,-9 15.6,9 0,18 -15.6,9 -15.6,-9" fill="none" stroke="#3ee8ff" stroke-width="1.4"/>
+        <g class="spin fast"><polygon points="0,-13 11.3,-6.5 11.3,6.5 0,13 -11.3,6.5 -11.3,-6.5" fill="none" stroke="#9d7dff" stroke-width=".8" stroke-dasharray="3 3"/></g>
+        <text x="0" y="5.5" text-anchor="middle" font-size="15" fill="#ffc54d" font-family="'Tiro Devanagari Sanskrit',serif">ॐ</text>
+      </svg>
+      <div><div class="t1" id="ttl">NEXUS</div><div class="t2" id="sub">FAMILY COMMAND DECK</div></div>
+    </div>
+    <div id="ticker"><span class="car">▸</span><span id="tickTxt">INITIALIZING</span></div>
+    <div id="hdrR">
+      <div class="pill" id="snd">◉ TAP FOR SOUND</div>
+      <div class="pill" id="wxMini">--°</div>
+      <div class="pill"><span class="dot warn" id="syncDot"></span><span id="syncTxt">SYNC</span></div>
+    </div>
+  </div>
+
+  <!-- clock -->
+  <div class="panel" id="pClock">
+    <div id="reactor">
+      <svg viewBox="-120 -120 240 240" aria-hidden="true">
+        <defs>
+          <radialGradient id="core"><stop offset="0" stop-color="#3ee8ff" stop-opacity=".18"/><stop offset=".7" stop-color="#3ee8ff" stop-opacity=".03"/><stop offset="1" stop-color="#3ee8ff" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle r="84" fill="url(#core)"/>
+        <g class="spin"><circle r="116" fill="none" stroke="#3ee8ff" stroke-opacity=".55" stroke-width="1" stroke-dasharray="1 5"/></g>
+        <g class="spin rev"><circle r="108" fill="none" stroke="#9d7dff" stroke-opacity=".75" stroke-width="2" stroke-dasharray="60 26 10 26"/></g>
+        <circle r="99" fill="none" stroke="#3ee8ff" stroke-opacity=".1" stroke-width="5"/>
+        <circle id="secArc" r="99" fill="none" stroke="#3ee8ff" stroke-width="5" stroke-linecap="butt" transform="rotate(-90)" stroke-dasharray="622.04" stroke-dashoffset="622.04" style="filter:drop-shadow(0 0 4px #3ee8ff)"/>
+        <g id="ticks"></g>
+        <g class="spin fast"><circle cx="0" cy="-116" r="3.2" fill="#ff3fa4" style="filter:drop-shadow(0 0 5px #ff3fa4)"/></g>
+      </svg>
+      <div id="clockTxt">
+        <div id="cDay">----</div>
+        <div id="cTime">--:--</div>
+        <div id="cSec">:--</div>
+        <div id="cDate">-- --- ----</div>
+        <div id="cTithi"></div>
+      </div>
+    </div>
+    <div id="sky">
+      <div class="it" id="skyRise"></div>
+      <div class="it" id="skySet"></div>
+      <div class="it" id="skyMoon"></div>
+    </div>
+  </div>
+
+  <!-- next priority -->
+  <div class="panel" id="pNext">
+    <div class="ptitle" id="nxLbl">NEXT PRIORITY</div>
+    <div id="nxTitle">Scanning timeline…</div>
+    <div id="nxMeta">&nbsp;</div>
+    <div id="nxCount"></div>
+  </div>
+
+  <!-- weather -->
+  <div class="panel" id="pWx">
+    <div class="ptitle"><span id="wxCity">ATMOSPHERE</span></div>
+    <div id="wxMain">
+      <span id="wxIcon"></span>
+      <div class="wxc"><div id="wxTemp">--<small>°C</small></div><div id="wxLbl">Awaiting data</div><div id="wxSub"></div></div>
+      <div id="wxDays"></div>
+    </div>
+    <div id="wxFoot"></div>
+  </div>
+
+  <!-- week -->
+  <div class="panel" id="pWeek">
+    <div class="ptitle">7-DAY MISSION TIMELINE <span class="r" id="wkStat"></span></div>
+    <div id="cols"></div>
+  </div>
+
+  <!-- transmission -->
+  <div class="panel" id="pTx">
+    <div id="txSide"><span>TRANSMISSION</span></div>
+    <div id="txBody">
+      <div id="txHead"><div class="ptitle" id="txTag">INCOMING</div><div id="txDots"></div></div>
+      <div id="txSlide"></div>
+    </div>
+  </div>
+
+  <!-- overlays -->
+  <div class="ov" id="dayOv"><div class="panel"><div class="ptitle" id="dayTtl">DAY</div><div class="x" data-close="dayOv">CLOSE ✕</div><div id="dayList"></div></div></div>
+
+  <div class="ov" id="alertOv">
+    <div class="rings"><i></i><i></i><i></i></div>
+    <div id="alertBox">
+      <div class="k">⚠ PRIORITY ALERT ⚠</div>
+      <div class="ic" id="alertIc"></div>
+      <div class="n" id="alertN"></div>
+      <div class="w" id="alertW"></div>
+      <div class="c" id="alertC"></div>
+      <div class="btn" id="alertAck">ACKNOWLEDGE</div>
+    </div>
+  </div>
+
+  <div class="ov" id="mantraOv">
+    <div class="halo"><svg viewBox="-260 -260 520 520" aria-hidden="true">
+      <g class="spin"><circle r="250" fill="none" stroke="#ffc54d" stroke-opacity=".5" stroke-dasharray="2 8"/></g>
+      <g class="spin rev"><circle r="220" fill="none" stroke="#ffc54d" stroke-opacity=".35" stroke-width="2" stroke-dasharray="90 30 8 30"/></g>
+      <g id="petals" class="spin" style="animation-duration:160s"></g>
+    </svg></div>
+    <div id="mBox">
+      <div class="k" id="mKind">MANTRA</div>
+      <div class="ttl" id="mTitle"></div>
+      <div id="mLines"></div>
+      <div id="mMean"></div>
+      <div id="mRep"></div>
+    </div>
+    <div class="x" id="mStop" style="z-index:2">STOP ■</div>
+  </div>
+
+  <div class="ov" id="briefOv">
+    <div class="sun"></div>
+    <svg class="rays" viewBox="-300 -300 600 600" aria-hidden="true"><g id="bRays" stroke="#ffc54d" stroke-width="2"></g></svg>
+    <div id="bBox">
+      <div class="k">☀ MORNING BRIEFING</div>
+      <div class="hi" id="bHi"></div>
+      <div class="dt" id="bDt"></div>
+      <div id="bGrid"><div id="bWx"></div><div id="bList"></div></div>
+      <div id="bQuote"></div>
+      <div id="bGo">START THE DAY<i id="bCount"></i></div>
+    </div>
+  </div>
+
+  <div class="ov" id="nightOv"><div id="nightClock"><div class="t" id="nT">--:--</div><div class="d" id="nD"></div><div class="n" id="nN"></div></div></div>
+
+  <div class="panel" id="toast"><div class="ptitle">HEADS UP</div><div class="n" id="toastN"></div><div class="m" id="toastM"></div></div>
+
+  <div class="ov" id="bootOv"><div id="bootTxt"></div><div id="bootBar"><i></i></div></div>
+
+  <div id="scan"></div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================================
+   CONFIG (injected by the Worker; these are only fallbacks)
+   ===================================================================== */
+const CFG = Object.assign({
+  title:'NEXUS', subtitle:'FAMILY COMMAND DECK', hour12:true,
+  city:{name:'New Delhi',lat:28.6139,lon:77.209}, units:'C',
+  members:[], familyColor:'#a98bff',
+  importantKeywords:['doctor','dentist','hospital','clinic'],
+  reminderMinutes:[1440,180,60], headsUpMinutes:15,
+  nightMode:{start:'22:30',end:'05:30'},
+  mantraAutoplay:{morning:'06:30',evening:'19:00'},
+  morningBriefing:'07:15', refreshMinutes:10
+}, window.FD_CONFIG || {});
+
+/* =====================================================================
+   helpers
+   ===================================================================== */
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+};
+const pad = (n) => String(n).padStart(2, '0');
+const DOW = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+const DOWL = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+const MON = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const DAY = 86400000;
+const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const addDaysD = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const dayKey = (d) => d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+const hm = (s) => { const [h, m] = String(s || '').split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+const minsNow = (d) => d.getHours() * 60 + d.getMinutes();
+function fmtTime(d, withAp = true) {
+  let h = d.getHours(); const m = pad(d.getMinutes());
+  if (!CFG.hour12) return pad(h) + ':' + m;
+  const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+  return withAp ? `${h}:${m} ${ap}` : `${h}:${m}`;
+}
+function inWindow(now, start, end) { // HH:MM window, may cross midnight
+  const n = minsNow(now), s = hm(start), e = hm(end);
+  return s <= e ? (n >= s && n < e) : (n >= s || n < e);
+}
+function rel(ms) {
+  const m = Math.round(ms / 60000);
+  if (m < 1) return 'now';
+  if (m < 60) return `in ${m} min`;
+  const h = Math.floor(m / 60), r = m % 60;
+  if (h < 24) return `in ${h} h${r ? ' ' + r + ' min' : ''}`;
+  const d = Math.floor(h / 24);
+  return `in ${d} day${d > 1 ? 's' : ''}${h % 24 ? ' ' + (h % 24) + ' h' : ''}`;
+}
+function dayWord(d, now) {
+  const diff = Math.round((startOfDay(d) - startOfDay(now)) / DAY);
+  if (diff === 0) return 'TODAY';
+  if (diff === 1) return 'TOMORROW';
+  return DOW[d.getDay()] + ' ' + d.getDate() + ' ' + MON[d.getMonth()];
+}
+
+/* =====================================================================
+   iCalendar parser with recurrence expansion
+   ===================================================================== */
+const ICS = (() => {
+  const WD = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
+  const fmtCache = {};
+  function tzParts(ms, tz) {
+    let f = fmtCache[tz];
+    if (!f) f = fmtCache[tz] = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+    const o = {}; for (const p of f.formatToParts(new Date(ms))) o[p.type] = +p.value; return o;
+  }
+  function zoned(w, tz) {
+    try {
+      const guess = Date.UTC(w.y, w.m, w.d, w.h, w.mi, w.s);
+      const offAt = (t) => { const p = tzParts(t, tz); return Date.UTC(p.year, p.month - 1, p.day, p.hour % 24, p.minute, p.second) - t; };
+      const o1 = offAt(guess); let t = guess - o1; const o2 = offAt(t); if (o2 !== o1) t = guess - o2;
+      return new Date(t);
+    } catch (e) { return new Date(w.y, w.m, w.d, w.h, w.mi, w.s); }
+  }
+  function unfold(t) { return t.replace(/\r\n?/g, '\n').replace(/\n[ \t]/g, ''); }
+  function parseLine(line) {
+    let i = 0, q = false;
+    for (; i < line.length; i++) { const c = line[i]; if (c === '"') q = !q; else if (c === ':' && !q) break; }
+    const head = line.slice(0, i), value = line.slice(i + 1);
+    const parts = head.split(';'); const params = {};
+    for (const p of parts.slice(1)) { const k = p.indexOf('='); if (k > 0) params[p.slice(0, k).toUpperCase()] = p.slice(k + 1).replace(/^"|"$/g, ''); }
+    return { name: parts[0].toUpperCase(), params, value };
+  }
+  const text = (v) => v.replace(/\\n/gi, '\n').replace(/\\([,;\\])/g, '$1').trim();
+  function dval(value, params) {
+    const v = value.trim();
+    if (params.VALUE === 'DATE' || /^\d{8}$/.test(v)) return { allDay: true, w: { y: +v.slice(0, 4), m: +v.slice(4, 6) - 1, d: +v.slice(6, 8), h: 0, mi: 0, s: 0 }, tz: null };
+    const m = v.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z?)$/);
+    if (!m) return null;
+    let tz = m[7] ? 'UTC' : (params.TZID || null);
+    if (tz && tz !== 'UTC') { try { new Intl.DateTimeFormat('en-US', { timeZone: tz }); } catch (e) { tz = null; } }
+    return { allDay: false, w: { y: +m[1], m: +m[2] - 1, d: +m[3], h: +m[4], mi: +m[5], s: +m[6] }, tz };
+  }
+  function toDate(dv) {
+    const w = dv.w;
+    if (dv.allDay || !dv.tz) return new Date(w.y, w.m, w.d, w.h, w.mi, w.s);
+    if (dv.tz === 'UTC') return new Date(Date.UTC(w.y, w.m, w.d, w.h, w.mi, w.s));
+    return zoned(w, dv.tz);
+  }
+  function duration(v) {
+    const m = v.match(/^([+-])?P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
+    if (!m) return 0;
+    const ms = (((+m[2] || 0) * 7 + (+m[3] || 0)) * 86400 + (+m[4] || 0) * 3600 + (+m[5] || 0) * 60 + (+m[6] || 0)) * 1000;
+    return m[1] === '-' ? -ms : ms;
+  }
+  function rrule(v) {
+    const r = {};
+    for (const part of v.split(';')) {
+      const [k, val] = part.split('='); if (!k || val == null) continue;
+      const K = k.toUpperCase();
+      if (K === 'FREQ' || K === 'WKST') r[K] = val.toUpperCase();
+      else if (K === 'INTERVAL' || K === 'COUNT') r[K] = parseInt(val, 10);
+      else if (K === 'UNTIL') r.UNTIL = dval(val, {});
+      else if (K === 'BYDAY') r.BYDAY = val.split(',').map((x) => { const mm = x.trim().toUpperCase().match(/^([+-]?\d+)?(SU|MO|TU|WE|TH|FR|SA)$/); return mm ? { n: mm[1] ? parseInt(mm[1], 10) : 0, wd: WD[mm[2]] } : null; }).filter(Boolean);
+      else if (K === 'BYMONTHDAY' || K === 'BYMONTH' || K === 'BYSETPOS') r[K] = val.split(',').map((x) => parseInt(x, 10)).filter((x) => !isNaN(x));
+    }
+    return r;
+  }
+  const dim = (y, m) => new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+  const wday = (w) => new Date(Date.UTC(w.y, w.m, w.d)).getUTCDay();
+  function addD(w, n) { const t = new Date(Date.UTC(w.y, w.m, w.d + n)); return Object.assign({}, w, { y: t.getUTCFullYear(), m: t.getUTCMonth(), d: t.getUTCDate() }); }
+  const cmp = (a, b) => (a.y - b.y) || (a.m - b.m) || (a.d - b.d);
+  function monthDays(y, m, r, start) {
+    const n = dim(y, m); let out = [];
+    if (r.BYMONTHDAY) { for (const x of r.BYMONTHDAY) { const d = x > 0 ? x : n + 1 + x; if (d >= 1 && d <= n) out.push(d); } }
+    else if (r.BYDAY) {
+      for (const b of r.BYDAY) {
+        const all = []; for (let d = 1; d <= n; d++) if (new Date(Date.UTC(y, m, d)).getUTCDay() === b.wd) all.push(d);
+        if (b.n) { const d = b.n > 0 ? all[b.n - 1] : all[all.length + b.n]; if (d) out.push(d); } else out.push(...all);
+      }
+      out.sort((a, b) => a - b);
+      if (r.BYSETPOS && r.BYSETPOS.length) out = r.BYSETPOS.map((p) => (p > 0 ? out[p - 1] : out[out.length + p])).filter(Boolean);
+    } else if (start.d <= n) out.push(start.d);
+    return [...new Set(out)].sort((a, b) => a - b);
+  }
+  function* cands(start, r) {
+    const iv = Math.max(1, r.INTERVAL || 1);
+    if (r.FREQ === 'DAILY') {
+      for (let i = 0; ; i += iv) {
+        const w = addD(start, i);
+        if (r.BYDAY && !r.BYDAY.some((b) => b.wd === wday(w))) { yield null; continue; }
+        if (r.BYMONTH && !r.BYMONTH.includes(w.m + 1)) { yield null; continue; }
+        yield w;
+      }
+    } else if (r.FREQ === 'WEEKLY') {
+      const days = r.BYDAY && r.BYDAY.length ? r.BYDAY.map((b) => b.wd) : [wday(start)];
+      const wk = WD[r.WKST || 'MO'];
+      const ws0 = addD(start, -((wday(start) - wk + 7) % 7));
+      for (let k = 0; ; k += iv) {
+        const ws = addD(ws0, k * 7);
+        const list = days.map((d) => addD(ws, (d - wk + 7) % 7)).sort(cmp);
+        for (const w of list) if (cmp(w, start) >= 0) yield w;
+        yield null;
+      }
+    } else if (r.FREQ === 'MONTHLY') {
+      for (let k = 0; ; k += iv) {
+        const y = start.y + Math.floor((start.m + k) / 12), m = (start.m + k) % 12;
+        for (const d of monthDays(y, m, r, start)) { const w = Object.assign({}, start, { y, m, d }); if (cmp(w, start) >= 0) yield w; }
+        yield null;
+      }
+    } else if (r.FREQ === 'YEARLY') {
+      for (let k = 0; ; k += iv) {
+        const y = start.y + k; const months = r.BYMONTH ? r.BYMONTH.map((x) => x - 1) : [start.m];
+        for (const m of months) {
+          const days = (r.BYDAY || r.BYMONTHDAY) ? monthDays(y, m, r, start) : (start.d <= dim(y, m) ? [start.d] : []);
+          for (const d of days) { const w = Object.assign({}, start, { y, m, d }); if (cmp(w, start) >= 0) yield w; }
+        }
+        yield null;
+      }
+    }
+  }
+  function parse(icsText, cal, from, to) {
+    const lines = unfold(icsText || '').split('\n');
+    const raw = []; let cur = null, depth = 0;
+    for (const line of lines) {
+      if (!line) continue;
+      if (line === 'BEGIN:VEVENT') { cur = { exdates: new Set() }; depth = 0; continue; }
+      if (!cur) continue;
+      if (line.startsWith('BEGIN:')) { depth++; continue; }
+      if (line.startsWith('END:')) { if (depth) { depth--; continue; } if (line === 'END:VEVENT') { raw.push(cur); cur = null; } continue; }
+      if (depth) continue; // inside VALARM etc.
+      const p = parseLine(line);
+      switch (p.name) {
+        case 'UID': cur.uid = p.value; break;
+        case 'SUMMARY': cur.title = text(p.value); break;
+        case 'DESCRIPTION': cur.desc = text(p.value); break;
+        case 'LOCATION': cur.loc = text(p.value); break;
+        case 'STATUS': cur.status = p.value.toUpperCase(); break;
+        case 'DTSTART': cur.ds = dval(p.value, p.params); break;
+        case 'DTEND': cur.de = dval(p.value, p.params); break;
+        case 'DURATION': cur.dur = duration(p.value); break;
+        case 'RRULE': cur.rr = rrule(p.value); break;
+        case 'RECURRENCE-ID': cur.rid = dval(p.value, p.params); break;
+        case 'EXDATE': for (const v of p.value.split(',')) { const dv = dval(v, p.params); if (dv) cur.exdates.add(toDate(dv).getTime()); } break;
+      }
+    }
+    const overrides = new Set();
+    for (const e of raw) if (e.rid && e.uid) overrides.add(e.uid + '|' + toDate(e.rid).getTime());
+    const out = [];
+    const F = from.getTime(), T = to.getTime();
+    for (const e of raw) {
+      if (!e.ds) continue;
+      const allDay = e.ds.allDay;
+      const s0 = toDate(e.ds);
+      let durMs = e.de ? toDate(e.de) - s0 : (e.dur != null ? e.dur : (allDay ? DAY : 0));
+      if (durMs < 0) durMs = 0;
+      const base = { uid: e.uid || Math.random().toString(36), title: e.title || '(untitled)', desc: e.desc || '', loc: e.loc || '', allDay, cal };
+      const push = (startMs) => {
+        let st = new Date(startMs), en = new Date(startMs + durMs);
+        if (allDay) { const days = Math.max(1, Math.round(durMs / DAY)); en = addDaysD(st, days); }
+        out.push(Object.assign({}, base, { start: st, end: en, key: base.uid + '@' + startMs }));
+      };
+      if (e.status === 'CANCELLED') continue;
+      if (!e.rr || e.rid) {
+        const s = s0.getTime(); const end = s + Math.max(durMs, 1);
+        if (end > F && s < T) push(s);
+        continue;
+      }
+      if (!e.rr.FREQ) continue;
+      let start = e.ds;
+      if (start.tz === 'UTC') { const d = s0; start = { allDay: false, tz: null, w: { y: d.getFullYear(), m: d.getMonth(), d: d.getDate(), h: d.getHours(), mi: d.getMinutes(), s: d.getSeconds() } }; }
+      let until = null;
+      if (e.rr.UNTIL) { until = toDate(e.rr.UNTIL).getTime(); if (e.rr.UNTIL.allDay) until += DAY - 1; }
+      let count = 0, guard = 0;
+      for (const w of cands(start.w, e.rr)) {
+        if (++guard > 40000) break;
+        if (!w) { continue; }
+        const s = toDate({ allDay: start.allDay, w, tz: start.tz }).getTime();
+        if (until != null && s > until) break;
+        count++;
+        if (e.rr.COUNT && count > e.rr.COUNT) break;
+        if (s >= T) break;
+        if (e.exdates.has(s) || overrides.has(e.uid + '|' + s)) continue;
+        if (s + Math.max(durMs, 1) > F) push(s);
+      }
+    }
+    return out;
+  }
+  return { parse };
+})();
+
+/* =====================================================================
+   Panchang: tithi, lunar month (amanta, with Adhik Maas) and Hindu festivals,
+   computed from Sun/Moon positions (Meeus) for the family's location.
+   ===================================================================== */
+const PANCHANG = (() => {
+  const R = Math.PI / 180, norm = (x) => ((x % 360) + 360) % 360;
+  const jdOf = (ms) => ms / 86400000 + 2440587.5, msOf = (jd) => (jd - 2440587.5) * 86400000;
+  function sunLong(jd) {
+    const T = (jd - 2451545) / 36525;
+    const L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
+    const M = (357.52911 + 35999.05029 * T - 0.0001537 * T * T) * R;
+    const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M) + (0.019993 - 0.000101 * T) * Math.sin(2 * M) + 0.000289 * Math.sin(3 * M);
+    const om = (125.04 - 1934.136 * T) * R;
+    return norm(L0 + C - 0.00569 - 0.00478 * Math.sin(om));
+  }
+  // [D, M, M', F, coefficient (1e-6 deg)] — Meeus table 47.A
+  const MT = [[0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],[0,1,0,0,-185116],[0,0,0,2,-114332],[2,0,-2,0,58793],[2,-1,-1,0,57066],[2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],[0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],[0,0,1,-2,10980],[4,0,-1,0,10675],[0,0,3,0,10034],[4,0,-2,0,8548],[2,1,-1,0,-7888],[2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],[2,-1,1,0,4036],[2,0,2,0,3994],[4,0,0,0,3861],[2,0,-3,0,3665],[0,1,-2,0,-2689],[2,0,-1,2,-2602],[2,-1,-2,0,2390],[1,0,1,0,-2348],[2,-2,0,0,2236],[0,1,2,0,-2120],[0,2,0,0,-2069],[2,-2,-1,0,2048],[2,0,1,-2,-1773],[2,0,0,2,-1595],[4,-1,-1,0,1215],[0,0,2,2,-1110],[3,0,-1,0,-892],[2,1,1,0,-810],[4,-1,-2,0,759],[0,2,-1,0,-713],[2,2,-1,0,-700],[2,1,-2,0,691],[2,-1,0,-2,596],[4,0,1,0,549],[0,0,4,0,537],[4,-1,0,0,520],[1,0,-2,0,-487],[2,1,0,-2,-399],[0,0,2,-2,-381],[1,1,1,0,351],[3,0,-2,0,-340],[4,0,-3,0,330],[2,-1,2,0,327],[0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294]];
+  function moonLong(jd) {
+    const T = (jd - 2451545) / 36525, T2 = T * T, T3 = T2 * T, T4 = T3 * T;
+    const Lp = 218.3164477 + 481267.88123421 * T - 0.0015786 * T2 + T3 / 538841 - T4 / 65194000;
+    const D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T2 + T3 / 545868 - T4 / 113065000;
+    const M = 357.5291092 + 35999.0502909 * T - 0.0001536 * T2 + T3 / 24490000;
+    const Mp = 134.9633964 + 477198.8675055 * T + 0.0087414 * T2 + T3 / 69699 - T4 / 14712000;
+    const F = 93.272095 + 483202.0175233 * T - 0.0036539 * T2 - T3 / 3526000 + T4 / 863310000;
+    const E = 1 - 0.002516 * T - 0.0000074 * T2;
+    let s = 0;
+    for (const [d, m, mp, f, c] of MT) {
+      const e = Math.abs(m) === 1 ? E : Math.abs(m) === 2 ? E * E : 1;
+      s += c * e * Math.sin((d * D + m * M + mp * Mp + f * F) * R);
+    }
+    const A1 = 119.75 + 131.849 * T, A2 = 53.09 + 479264.29 * T;
+    s += 3958 * Math.sin(A1 * R) + 1962 * Math.sin((Lp - F) * R) + 318 * Math.sin(A2 * R);
+    return norm(Lp + s / 1e6);
+  }
+  const elong = (jd) => norm(moonLong(jd) - sunLong(jd));
+  const ayanamsa = (jd) => 23.853 + ((jd - 2451545) / 365.25) * (50.29 / 3600); // Lahiri
+  const sidSun = (jd) => norm(sunLong(jd) - ayanamsa(jd));
+  const sign = (jd) => Math.floor(sidSun(jd) / 30); // 0 = Mesha (Aries)
+
+  function bisect(f, a, b) { for (let i = 0; i < 40; i++) { const m = (a + b) / 2; if (f(m)) b = m; else a = m; } return (a + b) / 2; }
+  function newMoons(jd0, jd1) {
+    const out = []; let prev = elong(jd0);
+    for (let jd = jd0 + 1; jd <= jd1; jd += 1) {
+      const e = elong(jd);
+      if (e < prev - 180) out.push(bisect((x) => elong(x) < 180, jd - 1, jd));
+      prev = e;
+    }
+    return out;
+  }
+  function sunTimes(y, m, d, lat, lon) { // returns JD of sunrise/sunset on that civil date (for the location's longitude)
+    const n = Math.round(jdOf(Date.UTC(y, m, d, 12)) - 2451545);
+    const Js = n - lon / 360;
+    const M = norm(357.5291 + 0.98560028 * Js), Mr = M * R;
+    const C = 1.9148 * Math.sin(Mr) + 0.02 * Math.sin(2 * Mr) + 0.0003 * Math.sin(3 * Mr);
+    const lam = norm(M + C + 180 + 102.9372) * R;
+    const Jt = 2451545 + Js + 0.0053 * Math.sin(Mr) - 0.0069 * Math.sin(2 * lam);
+    const dec = Math.asin(Math.sin(lam) * Math.sin(23.4397 * R));
+    const cw = (Math.sin(-0.833 * R) - Math.sin(lat * R) * Math.sin(dec)) / (Math.cos(lat * R) * Math.cos(dec));
+    const w = Math.acos(Math.max(-1, Math.min(1, cw))) / R;
+    return { rise: Jt - w / 360, set: Jt + w / 360 };
+  }
+
+  const MONTHS = ['Chaitra','Vaishakha','Jyeshtha','Ashadha','Shravana','Bhadrapada','Ashvin','Kartika','Margashirsha','Pausha','Magha','Phalguna'];
+  const TITHI = ['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi'];
+  const tithiName = (t) => (t === 15 ? 'Purnima' : t === 30 ? 'Amavasya' : (t <= 15 ? 'Shukla ' : 'Krishna ') + TITHI[(t - 1) % 15]);
+  // [amanta month 1-12, tithi 1-30, time of observance, name]; S = Shukla 1-15, K = Krishna 16-30
+  const MAJOR = [
+    [1,1,'rise','Ugadi · Gudi Padwa · Chaitra Navratri'],[1,9,'noon','Ram Navami'],[1,13,'rise','Mahavir Jayanti'],[1,15,'rise','Hanuman Jayanti'],
+    [2,3,'rise','Akshaya Tritiya'],[2,15,'rise','Buddha Purnima'],
+    [3,10,'rise','Ganga Dussehra'],[3,11,'rise','Nirjala Ekadashi'],[3,15,'rise','Vat Purnima'],
+    [4,2,'rise','Rath Yatra'],[4,11,'rise','Devshayani Ekadashi'],[4,15,'rise','Guru Purnima'],
+    [5,3,'rise','Hariyali Teej'],[5,5,'rise','Nag Panchami'],[5,15,'aparahna','Raksha Bandhan'],[5,23,'rise','Krishna Janmashtami'],
+    [6,3,'rise','Hartalika Teej'],[6,4,'noon','Ganesh Chaturthi'],[6,14,'rise','Anant Chaturdashi'],[6,30,'rise','Mahalaya Amavasya'],
+    [7,1,'rise','Sharad Navratri begins'],[7,8,'rise','Durga Ashtami'],[7,9,'noon','Maha Navami'],[7,10,'aparahna','Dussehra · Vijayadashami'],[7,15,'set','Sharad Purnima'],
+    [7,19,'moon','Karva Chauth'],[7,28,'pradosh','Dhanteras'],[7,29,'rise','Narak Chaturdashi · Choti Diwali'],[7,30,'pradosh','Diwali · Lakshmi Puja'],
+    [8,2,'rise','Bhai Dooj'],[8,6,'set','Chhath Puja'],[8,11,'rise','Dev Uthani Ekadashi'],[8,15,'rise','Kartik Purnima · Guru Nanak Jayanti'],
+    [9,11,'rise','Gita Jayanti · Mokshada Ekadashi'],[9,15,'rise','Dattatreya Jayanti'],
+    [10,7,'rise','Guru Gobind Singh Jayanti'],
+    [11,5,'rise','Vasant Panchami'],[11,29,'midnight','Maha Shivaratri'],
+    [12,15,'pradosh','Holika Dahan'],
+  ];
+  // monthly observances (any month, including Adhik)
+  const MONTHLY = [[11,'rise','Ekadashi'],[26,'rise','Ekadashi'],[15,'rise','Purnima'],[30,'rise','Amavasya'],[19,'moon','Sankashti Chaturthi'],[4,'noon','Vinayaka Chaturthi'],[13,'set','Pradosh Vrat'],[28,'set','Pradosh Vrat']];
+
+  let memo = null;
+  function compute(lat, lon, tz, fromDate, days) {
+    const key = [lat, lon, tz, fromDate.toDateString(), days].join('|');
+    if (memo && memo.key === key) return memo.val;
+    const ymdList = [];
+    for (let i = -2; i <= days + 2; i++) { const d = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate() + i); ymdList.push([d.getFullYear(), d.getMonth(), d.getDate()]); }
+    const jd0 = jdOf(Date.UTC(...ymdList[0])) - 40, jd1 = jdOf(Date.UTC(...ymdList[ymdList.length - 1])) + 40;
+    const nms = newMoons(jd0, jd1);
+    const lun = nms.slice(0, -1).map((nm, k) => {
+      const s1 = sign(nm), s2 = sign(nms[k + 1]);
+      return { start: nm, end: nms[k + 1], month: (s1 + 1) % 12 + 1, adhik: s1 === s2 };
+    });
+    const lunIdx = (jd) => lun.findIndex((l) => jd >= l.start && jd < l.end);
+    const info = (jd) => { const k = lunIdx(jd); const t = Math.floor(elong(jd) / 12) + 1; return { k, t, num: k * 30 + t, l: lun[k] }; };
+    const dayRows = ymdList.map(([y, m, d]) => {
+      const st = sunTimes(y, m, d, lat, lon), nx = sunTimes(y, m, d + 1, lat, lon);
+      const kal = {
+        rise: st.rise, noon: (st.rise + st.set) / 2, aparahna: st.rise + 0.7 * (st.set - st.rise), set: st.set,
+        pradosh: st.set + 1 / 24, moon: st.set + 2 / 24, midnight: (st.set + nx.rise) / 2,
+      };
+      const at = {}, elongAt = {}; for (const k in kal) { at[k] = info(kal[k]); elongAt[k] = elong(kal[k]); }
+      return { y, m, d, at, elongAt };
+    });
+    const fest = [];
+    const BHADRA = /Raksha Bandhan|Holika Dahan/;
+    const fire = (targetFor, kala, name, major, extra) => {
+      for (let i = 1; i < dayRows.length; i++) {
+        const a = dayRows[i - 1].at[kala], b = dayRows[i].at[kala];
+        if (a.k < 0 || b.k < 0) continue;
+        for (let k = a.k; k <= b.k; k++) {
+          const target = targetFor(k); if (target == null) continue;
+          if (!(a.num < target && b.num >= target)) continue;
+          // tithi present at this day's observance time → this day; skipped entirely (kshaya) → the day it occurred
+          let j = b.num === target ? i : i - 1;
+          // Purnima festivals avoid Bhadra (Vishti karana = first half of Purnima)
+          if (BHADRA.test(name) && b.num === target) {
+            const e = dayRows[j].elongAt[kala];
+            if (e < 174 && j + 1 < dayRows.length) j = j + 1;
+          }
+          const r = dayRows[j]; if (j === 0) continue;
+          fest.push({ y: r.y, m: r.m, d: r.d, name, major, desc: extra(k, target) });
+        }
+      }
+    };
+    const desc = (k, target) => { const t = target - k * 30; return `${lun[k].adhik ? 'Adhik ' : ''}${MONTHS[lun[k].month - 1]} ${tithiName(t)} · Panchang for ${CFG.city.name}`; };
+    for (const [mo, t, kala, name] of MAJOR) fire((k) => (lun[k] && lun[k].month === mo && !lun[k].adhik ? k * 30 + t : null), kala, name, true, desc);
+    for (const [t, kala, name] of MONTHLY) fire((k) => (lun[k] ? k * 30 + t : null), kala, name, false, desc);
+    // Holi (Dhulandi) is the morning after Holika Dahan
+    // Holi (Dhulandi) is the morning after Holika Dahan; Govardhan Puja the day after Lakshmi Puja
+    const nextDay = (src, name, desc) => fest.filter((f) => f.name === src).forEach((f) => { const n = new Date(f.y, f.m, f.d + 1); fest.push({ y: n.getFullYear(), m: n.getMonth(), d: n.getDate(), name, major: true, desc }); });
+    nextDay('Holika Dahan', 'Holi', 'Day after Holika Dahan · Panchang');
+    nextDay('Diwali · Lakshmi Puja', 'Govardhan Puja · Annakut', 'Day after Diwali · Panchang');
+    // solar festivals: Makar Sankranti (Sun enters sidereal Capricorn), Baisakhi (Aries)
+    for (const [deg, names] of [[270, ['Lohri', 'Makar Sankranti · Pongal']], [0, [null, 'Baisakhi · Vaisakhi']]]) {
+      for (let i = 1; i < dayRows.length; i++) {
+        const [y, m, d] = [dayRows[i].y, dayRows[i].m, dayRows[i].d];
+        const st = sunTimes(y, m, d, lat, lon), pv = sunTimes(y, m, d - 1, lat, lon);
+        const cross = (a, b) => norm(sidSun(b) - deg) < norm(sidSun(a) - deg);
+        if (cross(pv.set, st.set)) { // entered between yesterday's and today's sunset → observed today
+          fest.push({ y, m, d, name: names[1], major: true, desc: 'Solar festival · Panchang' });
+          if (names[0]) { const p = new Date(y, m, d - 1); fest.push({ y: p.getFullYear(), m: p.getMonth(), d: p.getDate(), name: names[0], major: true, desc: 'Eve of Makar Sankranti' }); }
+        }
+      }
+    }
+    // national days
+    for (const [y] of [[ymdList[0][0]], [ymdList[ymdList.length - 1][0]]]) {
+      [[0, 26, 'Republic Day (India)'], [7, 15, 'Independence Day (India)'], [9, 2, 'Gandhi Jayanti']].forEach(([m, d, n]) => fest.push({ y, m, d, name: n, major: true, desc: 'National day of India' }));
+    }
+    // a monthly observance on the same day as a major festival is redundant
+    const majorDays = new Set(fest.filter((f) => f.major).map((f) => `${f.y}-${f.m}-${f.d}`));
+    const seen = new Set();
+    const out = fest.filter((f) => {
+      const k = `${f.y}-${f.m}-${f.d}|${f.name}`; if (seen.has(k)) return false; seen.add(k);
+      if (!f.major && majorDays.has(`${f.y}-${f.m}-${f.d}`) && /Ekadashi|Purnima|Amavasya/.test(f.name)) {
+        return !fest.some((g) => g.major && g.y === f.y && g.m === f.m && g.d === f.d && /Ekadashi|Purnima|Amavasya|Diwali|Holika|Mahalaya|Guru Purnima|Raksha/.test(g.name));
+      }
+      return true;
+    });
+    // today's tithi (at sunrise) for the clock
+    const tn = new Date();
+    const todayRow = dayRows.find((r) => r.y === tn.getFullYear() && r.m === tn.getMonth() && r.d === tn.getDate());
+    let today = null;
+    if (todayRow && todayRow.at.rise.l) { const a = todayRow.at.rise; today = `${a.l.adhik ? 'Adhik ' : ''}${MONTHS[a.l.month - 1]} · ${tithiName(a.t)}`; }
+    memo = { key, val: { festivals: out, today, lunations: lun, rows: dayRows } };
+    return memo.val;
+  }
+  function holidays(fromDate, days) {
+    const c = CFG.city || {}; if (c.lat == null) return { list: [], today: null };
+    const tz = CFG.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const r = compute(c.lat, c.lon, tz, fromDate, days);
+    return {
+      today: r.today,
+      list: r.festivals.map((f) => ({ uid: 'pg-' + f.y + f.m + f.d + f.name, key: 'pg-' + f.y + f.m + f.d + f.name, title: f.name, desc: f.desc, loc: '', allDay: true, cal: 'panchang', public: f.major, panchang: true, start: new Date(f.y, f.m, f.d), end: new Date(f.y, f.m, f.d + 1) })),
+    };
+  }
+  return { holidays, compute, sunTimes, elong, tithiName, MONTHS };
+})();
+
+/* =====================================================================
+   classification: members, importance, icons
+   ===================================================================== */
+const ICONS = {
+  tooth: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 2.6 1 6.5 2.6 6.5 1.6 0 1.6-5 4.4-5s2.8 5 4.4 5c1.6 0 2.1-3.9 2.6-6.5.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1.2-5 1.2S9 3 7 3z"/></svg>',
+  med: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></svg>',
+  cake: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16v-8H4zM4 16c2 1.5 4 1.5 5.3 0 1.4 1.5 4 1.5 5.4 0C16 17.5 18 17.5 20 16M12 13V9M12 6.5c1-1 1-2.2 0-3.5-1 1.3-1 2.5 0 3.5z"/></svg>',
+  school: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>',
+  plane: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 13l8-2 4-8h2l-1.5 8.2L21 12v2l-6.5.8L16 21h-2l-4-6-8-1z"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l2.9 6.5 7.1.7-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.7z"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2zM12 10v5M12 18v.5"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  play: '<svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="#ffc54d"/></svg>',
+};
+const RX = {
+  dental: /\b(dentist|dental|teeth|tooth|orthodont\w*|braces|root canal)\b/i,
+  medical: /\b(doctor|dr\.?|hospital|clinic|check-?up|vaccin\w*|physio\w*|therapy|blood test|lab test|scan|x-?ray|mri|ultrasound|eye test|surgery|pediatric\w*|paediatric\w*|cardio\w*|derma\w*|ortho\w*|medicine|pharmacy)\b/i,
+  bday: /\b(birthday|bday|b'day|anniversary|janamdin|janmdin)\b/i,
+  school: /\b(school|ptm|exam|test|class|tuition|homework|college|project)\b/i,
+  travel: /\b(flight|train|trip|travel|airport|station|journey|bus)\b/i,
+};
+function classify(ev) {
+  let title = ev.title.trim();
+  let flagged = false;
+  if (title.startsWith('!')) { flagged = true; title = title.replace(/^!+\s*/, ''); }
+  let member = null;
+  const pm = title.match(/^\[([^\]]+)\]\s*/) || title.match(/^([A-Za-z]+):\s+/);
+  if (pm) {
+    const nm = pm[1].trim().toLowerCase();
+    const hit = CFG.members.find((m) => m.name.toLowerCase() === nm || (m.match || []).includes(nm));
+    if (hit) { member = hit; title = title.slice(pm[0].length); }
+  }
+  if (!member && ev.cal) member = CFG.members.find((m) => m.name.toLowerCase() === String(ev.cal).toLowerCase()) || null;
+  if (!member) {
+    const low = ' ' + ev.title.toLowerCase() + ' ';
+    member = CFG.members.find((m) => [m.name, ...(m.match || [])].some((k) => new RegExp('\\b' + k.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(low))) || null;
+  }
+  const hay = title + ' ' + ev.loc;
+  let kind = 'gen';
+  if (RX.dental.test(hay)) kind = 'tooth';
+  else if (RX.medical.test(hay)) kind = 'med';
+  else if (RX.bday.test(hay)) kind = 'cake';
+  else if (RX.travel.test(hay)) kind = 'plane';
+  else if (RX.school.test(hay)) kind = 'school';
+  const kw = (CFG.importantKeywords || []).some((k) => (' ' + hay.toLowerCase() + ' ').includes(k.toLowerCase()));
+  const important = flagged || kind === 'tooth' || kind === 'med' || kw;
+  return Object.assign(ev, { title, member, kind, important, color: member ? member.color : CFG.familyColor, who: member ? member.name : 'Family' });
+}
+
+/* =====================================================================
+   weather (Open-Meteo, no key) + sun/moon
+   ===================================================================== */
+const WX = {
+  0: ['Clear sky', 'sun'], 1: ['Mainly clear', 'sun'], 2: ['Partly cloudy', 'psun'], 3: ['Overcast', 'cloud'],
+  45: ['Fog', 'fog'], 48: ['Rime fog', 'fog'], 51: ['Light drizzle', 'drz'], 53: ['Drizzle', 'drz'], 55: ['Heavy drizzle', 'drz'],
+  56: ['Freezing drizzle', 'drz'], 57: ['Freezing drizzle', 'drz'], 61: ['Light rain', 'rain'], 63: ['Rain', 'rain'], 65: ['Heavy rain', 'rain'],
+  66: ['Freezing rain', 'rain'], 67: ['Freezing rain', 'rain'], 71: ['Light snow', 'snow'], 73: ['Snow', 'snow'], 75: ['Heavy snow', 'snow'], 77: ['Snow grains', 'snow'],
+  80: ['Rain showers', 'rain'], 81: ['Rain showers', 'rain'], 82: ['Violent showers', 'rain'], 85: ['Snow showers', 'snow'], 86: ['Snow showers', 'snow'],
+  95: ['Thunderstorm', 'storm'], 96: ['Thunderstorm, hail', 'storm'], 99: ['Thunderstorm, hail', 'storm'],
+};
+function wxIcon(kind, night) {
+  const sun = '<circle cx="12" cy="12" r="4.2" stroke="#ffc54d"/><g stroke="#ffc54d"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g>';
+  const moon = '<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z" stroke="#c9d8ff"/>';
+  const cloud = (y = 0, c = '#8fb0cc') => `<path d="M7 ${18 + y}h10a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10.6 1.4A3.4 3.4 0 0 0 7 ${18 + y}z" stroke="${c}"/>`;
+  let g;
+  switch (kind) {
+    case 'sun': g = night ? moon : sun; break;
+    case 'psun': g = (night ? '<g transform="translate(4 -4) scale(.6)">' + moon + '</g>' : '<g transform="translate(5 -5) scale(.62)">' + sun + '</g>') + cloud(1, '#b9d3e8'); break;
+    case 'cloud': g = cloud(0, '#b9d3e8'); break;
+    case 'fog': g = '<path d="M4 9h16M3 13h18M5 17h14" stroke="#8fb0cc"/>'; break;
+    case 'drz': g = cloud(-3) + '<path d="M9 19v1.5M13 19v1.5M17 19v1.5" stroke="#3ee8ff"/>'; break;
+    case 'rain': g = cloud(-3) + '<path d="M8.5 18.5l-1 3M12.5 18.5l-1 3M16.5 18.5l-1 3" stroke="#3ee8ff"/>'; break;
+    case 'snow': g = cloud(-3) + '<path d="M9 20h.01M13 21h.01M17 20h.01" stroke="#fff" stroke-width="2.6"/>'; break;
+    case 'storm': g = cloud(-3) + '<path d="M13 16l-2.5 4h3l-2 3.5" stroke="#ffc54d"/>'; break;
+    default: g = cloud();
+  }
+  return `<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${g}</svg>`;
+}
+function moonInfo(date) {
+  const syn = 29.530588853; const ref = Date.UTC(2000, 0, 6, 18, 14);
+  let ph = (((date.getTime() - ref) / DAY) % syn) / syn; if (ph < 0) ph += 1;
+  const illum = (1 - Math.cos(2 * Math.PI * ph)) / 2;
+  const names = [[0.03, 'New Moon · Amavasya'], [0.22, 'Waxing Crescent'], [0.28, 'First Quarter'], [0.47, 'Waxing Gibbous'], [0.53, 'Full Moon · Purnima'], [0.72, 'Waning Gibbous'], [0.78, 'Last Quarter'], [0.97, 'Waning Crescent'], [1.01, 'New Moon · Amavasya']];
+  const name = names.find((n) => ph < n[0])[1];
+  return { ph, illum, name };
+}
+function moonSvg(ph) {
+  const r = 9, k = Math.cos(2 * Math.PI * ph), rx = Math.abs(k) * r;
+  const d = ph < 0.5
+    ? `M0,${-r}A${r},${r} 0 0 1 0,${r}A${rx},${r} 0 0 ${k > 0 ? 0 : 1} 0,${-r}Z`
+    : `M0,${-r}A${r},${r} 0 0 0 0,${r}A${rx},${r} 0 0 ${k > 0 ? 1 : 0} 0,${-r}Z`;
+  return `<svg viewBox="-11 -11 22 22"><circle r="${r}" fill="#0d1d33" stroke="#4f6d8a" stroke-width=".8"/><path d="${d}" fill="#e9eefc"/></svg>`;
+}
+
+/* =====================================================================
+   content: mantras, quotes, messages, facts, riddles
+   ===================================================================== */
+const MANTRAS = {
+  morning: [
+    { id: 'gayatri', title: 'गायत्री मन्त्र', name: 'Gayatri Mantra', reps: 3,
+      lines: [['ॐ भूर्भुवः स्वः', 'Om bhūr bhuvaḥ svaḥ'], ['तत्सवितुर्वरेण्यं', 'tat savitur vareṇyaṁ'], ['भर्गो देवस्य धीमहि', 'bhargo devasya dhīmahi'], ['धियो यो नः प्रचोदयात् ॥', 'dhiyo yo naḥ pracodayāt']],
+      meaning: 'We meditate on the radiant light of the divine Sun. May it awaken and guide our minds.' },
+    { id: 'karagre', title: 'कराग्रे वसते लक्ष्मीः', name: 'Karadarshanam (on waking)', reps: 1,
+      lines: [['कराग्रे वसते लक्ष्मीः', 'karāgre vasate lakṣmīḥ'], ['करमध्ये सरस्वती ।', 'karamadhye sarasvatī'], ['करमूले तु गोविन्दः', 'karamūle tu govindaḥ'], ['प्रभाते करदर्शनम् ॥', 'prabhāte karadarśanam']],
+      meaning: 'Lakshmi dwells at the fingertips, Saraswati in the palm, Govinda at its base. So look at your hands at dawn.' },
+    { id: 'ganesha', title: 'वक्रतुण्ड महाकाय', name: 'Ganesha Mantra', reps: 3,
+      lines: [['वक्रतुण्ड महाकाय', 'vakratuṇḍa mahākāya'], ['सूर्यकोटि समप्रभ ।', 'sūryakoṭi samaprabha'], ['निर्विघ्नं कुरु मे देव', 'nirvighnaṁ kuru me deva'], ['सर्वकार्येषु सर्वदा ॥', 'sarvakāryeṣu sarvadā']],
+      meaning: 'O Lord with the curved trunk and mighty form, radiant as a million suns, remove the obstacles from all my work, always.' },
+    { id: 'asato', title: 'असतो मा सद्गमय', name: 'Pavamana Mantra', reps: 1,
+      lines: [['ॐ असतो मा सद्गमय ।', 'Om asato mā sad gamaya'], ['तमसो मा ज्योतिर्गमय ।', 'tamaso mā jyotir gamaya'], ['मृत्योर्मा अमृतं गमय ।', 'mṛtyor mā amṛtaṁ gamaya'], ['ॐ शान्तिः शान्तिः शान्तिः ॥', 'Om śāntiḥ śāntiḥ śāntiḥ']],
+      meaning: 'Lead us from untruth to truth, from darkness to light, from death to immortality. Peace, peace, peace.' },
+    { id: 'shanti', title: 'ॐ सह नाववतु', name: 'Shanti Mantra (before study)', reps: 1,
+      lines: [['ॐ सह नाववतु । सह नौ भुनक्तु ।', 'Om saha nāvavatu, saha nau bhunaktu'], ['सह वीर्यं करवावहै ।', 'saha vīryaṁ karavāvahai'], ['तेजस्वि नावधीतमस्तु मा विद्विषावहै ।', 'tejasvi nāvadhītam astu mā vidviṣāvahai'], ['ॐ शान्तिः शान्तिः शान्तिः ॥', 'Om śāntiḥ śāntiḥ śāntiḥ']],
+      meaning: 'May we be protected together and nourished together. May we work with energy, may our learning shine, and may we never be hostile to each other.' },
+  ],
+  evening: [
+    { id: 'deepa', title: 'शुभं करोति कल्याणम्', name: 'Deepa Mantra (lamp lighting)', reps: 1,
+      lines: [['शुभं करोति कल्याणम्', 'śubhaṁ karoti kalyāṇam'], ['आरोग्यं धनसम्पदा ।', 'ārogyaṁ dhanasampadā'], ['शत्रुबुद्धिविनाशाय', 'śatrubuddhi vināśāya'], ['दीपज्योतिर्नमोऽस्तु ते ॥', 'dīpajyotir namo’stu te']],
+      meaning: 'Salutations to the lamp’s light, which brings goodness, well-being, health and prosperity, and dispels hostile thoughts.' },
+    { id: 'mahamrityunjaya', title: 'महामृत्युञ्जय मन्त्र', name: 'Mahamrityunjaya Mantra', reps: 3,
+      lines: [['ॐ त्र्यम्बकं यजामहे', 'Om tryambakaṁ yajāmahe'], ['सुगन्धिं पुष्टिवर्धनम् ।', 'sugandhiṁ puṣṭivardhanam'], ['उर्वारुकमिव बन्धनान्', 'urvārukam iva bandhanān'], ['मृत्योर्मुक्षीय माऽमृतात् ॥', 'mṛtyor mukṣīya mā’mṛtāt']],
+      meaning: 'We worship the three-eyed One, fragrant, who nourishes all. As a ripe cucumber is freed from its vine, may we be freed from death — not from immortality.' },
+    { id: 'sarve', title: 'सर्वे भवन्तु सुखिनः', name: 'Prayer for all', reps: 1,
+      lines: [['सर्वे भवन्तु सुखिनः', 'sarve bhavantu sukhinaḥ'], ['सर्वे सन्तु निरामयाः ।', 'sarve santu nirāmayāḥ'], ['सर्वे भद्राणि पश्यन्तु', 'sarve bhadrāṇi paśyantu'], ['मा कश्चिद्दुःखभाग्भवेत् ॥', 'mā kaścid duḥkhabhāg bhavet']],
+      meaning: 'May all be happy, may all be free from illness, may all see what is good, may no one suffer.' },
+  ],
+};
+const QUOTES = [
+  ['Arise, awake, and stop not till the goal is reached.', 'Swami Vivekananda'],
+  ['Take up one idea. Make that one idea your life.', 'Swami Vivekananda'],
+  ['You have a right to your actions, but never to their fruits.', 'Bhagavad Gita 2.47'],
+  ['Lift yourself by your own self; do not let yourself sink.', 'Bhagavad Gita 6.5'],
+  ['Joy and sorrow come and go like winter and summer. Bear them patiently.', 'Bhagavad Gita 2.14'],
+  ['What you would do tomorrow, do today; what you would do today, do now.', 'Kabir'],
+  ['Slowly, O mind — the gardener may pour a hundred pots, but fruit comes in its season.', 'Kabir'],
+  ['Strength does not come from physical capacity. It comes from an indomitable will.', 'Mahatma Gandhi'],
+  ['Let your life lightly dance on the edges of Time like dew on the tip of a leaf.', 'Rabindranath Tagore'],
+  ['You can’t cross the sea merely by standing and staring at the water.', 'Rabindranath Tagore'],
+  ['A journey of a thousand miles begins with a single step.', 'Lao Tzu'],
+  ['It does not matter how slowly you go, as long as you do not stop.', 'Confucius'],
+  ['Well done is better than well said.', 'Benjamin Franklin'],
+  ['The happiness of your life depends upon the quality of your thoughts.', 'Marcus Aurelius'],
+  ['Learn thoroughly what is worth learning, then live by it.', 'Thiruvalluvar'],
+  ['Truth alone triumphs.', 'Mundaka Upanishad · सत्यमेव जयते'],
+  ['The world is one family.', 'Maha Upanishad · वसुधैव कुटुम्बकम्'],
+];
+const MESSAGES = [
+  'Small steps, every single day. That’s how missions are won.',
+  'Drink water, stretch, and smile at someone in this house today.',
+  'Today’s objective: be 1% kinder than yesterday.',
+  'Phones down at dinner. Stories up.',
+  'You don’t have to be perfect — just present.',
+  'Finish one thing before starting the next. Focus is a superpower.',
+  'Say thank you to someone who usually goes unthanked.',
+  'A tidy space makes a calm mind. Ten minutes is enough.',
+  'Health is the real wealth. Did everyone take a walk today?',
+  'Ask a grandparent for a story from their childhood tonight.',
+  'Mistakes are data, not defeat. Recalibrate and continue.',
+  'Sleep is the best upgrade. Lights out on time tonight.',
+  'Celebrate a small win from today — out loud.',
+  'Help with one chore you usually skip. Teamwork makes the deck run.',
+  'Read ten pages of something new before bed.',
+  'Plan tomorrow tonight; wake up with a mission.',
+  'Laugh together today. It’s mandatory crew training.',
+  'Hug check: has everyone had one today?',
+];
+const FACTS = [
+  'Octopuses have three hearts and blue blood.',
+  'Honey never spoils — edible honey has been found in ancient Egyptian tombs.',
+  'A day on Venus is longer than a year on Venus.',
+  'Bananas are berries, but strawberries are not.',
+  'Chess began in India as Chaturanga around the 6th century.',
+  'Indian mathematician Brahmagupta wrote rules for calculating with zero in 628 CE.',
+  'Sunlight takes about 8 minutes and 20 seconds to reach Earth.',
+  'Sharks existed before trees did.',
+  'A group of flamingos is called a flamboyance.',
+  'Wombats produce cube-shaped poop.',
+  'Sound travels about four times faster in water than in air.',
+  'Chandrayaan-3 made India the first country to land near the Moon’s south pole, on 23 August 2023.',
+  'Butterflies taste with their feet.',
+  'Saturn is less dense than water — in a big enough bathtub, it would float.',
+  'There are more possible games of chess than atoms in the observable universe.',
+  'The Great Wall of China is not visible to the naked eye from the Moon.',
+  'A bolt of lightning is about five times hotter than the surface of the Sun.',
+  'Your brain uses about 20% of your body’s energy.',
+  'Ants don’t have lungs — they breathe through tiny holes in their bodies.',
+  'The Indian peacock’s “eyes” on its tail feathers are made by light, not pigment — it’s structural colour.',
+];
+const RIDDLES = [
+  ['What has keys but can’t open a single lock?', 'A PIANO'],
+  ['What gets wetter the more it dries?', 'A TOWEL'],
+  ['What has hands but can’t clap?', 'A CLOCK'],
+  ['I’m tall when I’m young and short when I’m old. What am I?', 'A CANDLE'],
+  ['What has to be broken before you can use it?', 'AN EGG'],
+  ['What goes up but never comes down?', 'YOUR AGE'],
+  ['What has a neck but no head?', 'A BOTTLE'],
+  ['The more you take, the more you leave behind. What are they?', 'FOOTSTEPS'],
+  ['What can travel around the world while staying in a corner?', 'A STAMP'],
+  ['What has many teeth but can’t bite?', 'A COMB'],
+  ['What runs but never walks, and has a mouth but never talks?', 'A RIVER'],
+  ['What has one eye but can’t see?', 'A NEEDLE'],
+  ['What belongs to you, but other people use it more than you?', 'YOUR NAME'],
+  ['Which month has 28 days?', 'ALL OF THEM'],
+  ['What can you catch but not throw?', 'A COLD'],
+];
+function dayIndex(d, n, salt = 0) { const k = Math.floor((startOfDay(d) - new Date(2020, 0, 1)) / DAY) + salt * 7; return ((k % n) + n) % n; }
+
+/* =====================================================================
+   state
+   ===================================================================== */
+const S = { events: [], holidays: [], wx: null, lastSync: store.get('nx-lastSync', null), syncErr: null, configured: true, dayKey: 0, nightPeek: 0 };
+
+/* =====================================================================
+   audio: chimes, drone, speech
+   ===================================================================== */
+const AU = {
+  ctx: null, unlocked: false, drone: null,
+  unlock() {
+    try {
+      if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      this.unlocked = true;
+      if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); }
+      $('#snd').classList.add('on'); $('#snd').textContent = '♪ SOUND ON';
+    } catch (e) {}
+  },
+  tone(freq, t0, dur, vol = 0.18, type = 'sine') {
+    const c = this.ctx; if (!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(c.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+  },
+  chime(kind) {
+    if (!this.unlocked || !this.ctx) return;
+    const t = this.ctx.currentTime + 0.05;
+    if (kind === 'alert') { [880, 1174.7, 1568].forEach((f, i) => { this.tone(f, t + i * 0.18, 0.9, 0.2); this.tone(f * 2, t + i * 0.18, 0.5, 0.05); }); }
+    else if (kind === 'soft') { this.tone(1318.5, t, 1.2, 0.12); this.tone(1975.5, t + 0.15, 1.4, 0.07); }
+    else if (kind === 'sunrise') { [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => { this.tone(f, t + i * 0.32, 2.6 - i * 0.2, 0.11); this.tone(f / 2, t + i * 0.32, 2.2, 0.04); }); }
+    else if (kind === 'bell') { [1, 2.76, 5.4, 8.93].forEach((m, i) => this.tone(392 * m, t, 3.2 - i * 0.6, 0.16 / (i + 1))); }
+  },
+  droneStart() {
+    if (!this.unlocked || !this.ctx || this.drone) return;
+    const c = this.ctx, master = c.createGain(); master.gain.value = 0.0001; master.connect(c.destination);
+    const nodes = [];
+    [[130.81, 'sine', 0.5], [196.0, 'sine', 0.35], [261.63, 'triangle', 0.12], [98.0, 'sine', 0.3]].forEach(([f, ty, v]) => {
+      const o = c.createOscillator(), g = c.createGain(), lfo = c.createOscillator(), lg = c.createGain();
+      o.type = ty; o.frequency.value = f; g.gain.value = v;
+      lfo.frequency.value = 0.07 + Math.random() * 0.08; lg.gain.value = v * 0.35; lfo.connect(lg).connect(g.gain);
+      o.connect(g).connect(master); o.start(); lfo.start(); nodes.push(o, lfo);
+    });
+    master.gain.exponentialRampToValueAtTime(0.09, c.currentTime + 2.5);
+    this.drone = { master, nodes };
+  },
+  droneStop() {
+    const d = this.drone; if (!d) return; this.drone = null;
+    const c = this.ctx; d.master.gain.cancelScheduledValues(c.currentTime);
+    d.master.gain.setValueAtTime(d.master.gain.value, c.currentTime);
+    d.master.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 2);
+    setTimeout(() => d.nodes.forEach((n) => { try { n.stop(); } catch (e) {} }), 2200);
+  },
+  voices() { try { return speechSynthesis.getVoices() || []; } catch (e) { return []; } },
+  pick(langPrefix) { const v = this.voices(); return v.find((x) => x.lang && x.lang.replace('_', '-').toLowerCase().startsWith(langPrefix)) || null; },
+  say(text, opts = {}) {
+    return new Promise((resolve) => {
+      if (!('speechSynthesis' in window)) return setTimeout(resolve, opts.fallbackMs || 3500);
+      const u = new SpeechSynthesisUtterance(text);
+      if (opts.voice) { u.voice = opts.voice; u.lang = opts.voice.lang; } else if (opts.lang) u.lang = opts.lang;
+      u.rate = opts.rate || 1; u.pitch = opts.pitch || 1; u.volume = 1;
+      let done = false; const fin = () => { if (!done) { done = true; resolve(); } };
+      u.onend = fin; u.onerror = fin;
+      setTimeout(fin, opts.maxMs || Math.max(4000, text.length * 160 + 2500));
+      speechSynthesis.speak(u);
+    });
+  },
+};
+if ('speechSynthesis' in window) { try { speechSynthesis.onvoiceschanged = () => {}; speechSynthesis.getVoices(); } catch (e) {} }
+
+/* =====================================================================
+   data loading
+   ===================================================================== */
+/* Backend: Google Apps Script (google.script.run) on the tablet, or /api/* on the local preview server. */
+const GAS = !!(window.google && google.script && google.script.run);
+function withTimeout(p, ms) { return Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]); }
+function gas(fn, ...args) { return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args)); }
+async function apiData() {
+  if (GAS) return JSON.parse(await withTimeout(gas('getData', window.FD_KEY || ''), 45000));
+  const r = await withTimeout(fetch('api/data', { cache: 'no-store' }), 20000);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+const UNIT = String(CFG.units || 'C').toUpperCase() === 'F' ? 'F' : 'C';
+async function apiWeather(lat, lon) {
+  if (GAS) return JSON.parse(await withTimeout(gas('getWeather', lat, lon, UNIT, window.FD_KEY || ''), 45000));
+  const r = await withTimeout(fetch(`api/weather?lat=${lat}&lon=${lon}&unit=${UNIT}`, { cache: 'no-store' }), 20000);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+const ymd = (s) => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d); };
+
+let retryTimer = null;
+async function loadData() {
+  let payload = null;
+  try {
+    payload = await apiData();
+    store.set('nx-cache', payload);
+    S.lastSync = Date.now(); store.set('nx-lastSync', S.lastSync); S.syncErr = null;
+  } catch (e) {
+    S.syncErr = (e && e.message) || 'offline';
+    payload = store.get('nx-cache', null);
+    clearTimeout(retryTimer); retryTimer = setTimeout(loadData, 60000);
+  }
+  applyPayload(payload);
+}
+
+function applyPayload(payload) {
+  const now = new Date();
+  const from = addDaysD(startOfDay(now), -1), to = addDaysD(startOfDay(now), 60);
+  if (payload) {
+    S.configured = payload.configured !== false; S.holidayInfo = payload.holidayInfo || '';
+    const evs = [];
+    for (const c of payload.calendars || []) {
+      if (!c.ok) { S.syncErr = (c.name || 'calendar') + ': ' + (c.error || 'error'); continue; }
+      try {
+        if (c.events) {
+          for (const o of c.events) {
+            const st = o.allDay ? ymd(o.startDate) : new Date(o.start);
+            const en = o.allDay ? ymd(o.endDate) : new Date(o.end);
+            if (en > from && st < to) evs.push({ uid: o.uid, key: o.uid, title: o.title || '(untitled)', desc: o.desc || '', loc: o.loc || '', allDay: !!o.allDay, cal: c.name, start: st, end: en <= st && o.allDay ? addDaysD(st, 1) : en });
+          }
+        } else evs.push(...ICS.parse(c.ics, c.name, from, to));
+      } catch (e) { console.warn('parse', e); }
+    }
+    const seen = new Set();
+    S.events = evs.filter((e) => (seen.has(e.key) ? false : seen.add(e.key))).map(classify).sort((a, b) => a.start - b.start || (b.allDay - a.allDay));
+    try {
+      const hs = Array.isArray(payload.holidays) ? payload.holidays : [payload.holidays || ''];
+      S.holidays = hs.flatMap((ics) => ICS.parse(ics, 'holidays', from, to)).map((h) => Object.assign(h, { public: /public holiday/i.test(h.desc) || !/observance/i.test(h.desc) }));
+    } catch (e) { S.holidays = []; }
+  }
+  // Hindu festivals and monthly observances from the Panchang engine (local to CFG.city)
+  try {
+    const pg = PANCHANG.holidays(addDaysD(startOfDay(now), -1), 62);
+    S.tithi = pg.today;
+    S.holidays = S.holidays.filter((h) => !h.panchang).concat(CFG.panchangMonthly === false ? pg.list.filter((h) => h.public) : pg.list);
+  } catch (e) { console.warn('panchang', e); }
+  renderAll();
+}
+
+async function loadWeather() {
+  const c = CFG.city || {};
+  if (c.lat == null) return;
+  try {
+    const w = await apiWeather(c.lat, c.lon);
+    if (!w || !w.current) throw new Error('bad weather');
+    S.wx = w; store.set('nx-wx', S.wx); S.wxErr = null;
+  } catch (e) { S.wxErr = String((e && e.message) || e).slice(0, 80); S.wx = S.wx || store.get('nx-wx', null); }
+  renderWeather(); renderWeek(); renderSky(new Date());
+}
+
+/* =====================================================================
+   rendering
+   ===================================================================== */
+function renderClock(now) {
+  let h = now.getHours(); const m = pad(now.getMinutes()); let ap = '';
+  if (CFG.hour12) { ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; }
+  $('#cTime').innerHTML = `${CFG.hour12 ? h : pad(h)}:${m}${ap ? `<span class="ap">${ap}</span>` : ''}`;
+  $('#cSec').textContent = ':' + pad(now.getSeconds());
+  $('#cDay').textContent = DOWL[now.getDay()];
+  $('#cDate').textContent = `${pad(now.getDate())} ${MON[now.getMonth()]} ${now.getFullYear()}`;
+  const arc = $('#secArc'), C = 622.04, s = now.getSeconds();
+  if (s === 0) { arc.style.transition = 'none'; arc.style.strokeDashoffset = C; void arc.getBoundingClientRect(); arc.style.transition = ''; }
+  arc.style.strokeDashoffset = C * (1 - (s === 0 ? 0 : s) / 60);
+}
+
+function renderSky(now) {
+  $('#cTithi').textContent = S.tithi || '';
+  const mi = moonInfo(now);
+  $('#skyMoon').innerHTML = `${moonSvg(mi.ph)}<span><b>${Math.round(mi.illum * 100)}%</b><br>${esc(mi.name.split(' · ')[0].toUpperCase())}</span>`;
+  const d = S.wx && S.wx.daily;
+  const up = '<svg viewBox="0 0 24 24" fill="none" stroke="#ffc54d" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h16M7 18a5 5 0 0 1 10 0M12 4v5M9.5 6.5L12 4l2.5 2.5"/></svg>';
+  const dn = '<svg viewBox="0 0 24 24" fill="none" stroke="#ff8a5c" stroke-width="1.6" stroke-linecap="round"><path d="M4 18h16M7 18a5 5 0 0 1 10 0M12 4v5M9.5 6.5L12 9l2.5-2.5"/></svg>';
+  if (d && d.sunrise) {
+    const i = d.time.indexOf(`${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`);
+    const k = i < 0 ? 0 : i;
+    $('#skyRise').innerHTML = `${up}<span>RISE<br><b>${fmtTime(new Date(d.sunrise[k]))}</b></span>`;
+    $('#skySet').innerHTML = `${dn}<span>SET<br><b>${fmtTime(new Date(d.sunset[k]))}</b></span>`;
+  } else { $('#skyRise').innerHTML = `${up}<span>RISE<br><b>--:--</b></span>`; $('#skySet').innerHTML = `${dn}<span>SET<br><b>--:--</b></span>`; }
+}
+
+function renderWeather() {
+  const w = S.wx; $('#wxCity').textContent = 'ATMOSPHERE · ' + String((CFG.city && CFG.city.name) || '').toUpperCase();
+  if (!w || !w.current) { $('#wxMini').textContent = '--°'; return; }
+  const cur = w.current; const info = WX[cur.weather_code] || ['—', 'cloud'];
+  const night = cur.is_day === 0;
+  $('#wxIcon').innerHTML = wxIcon(info[1], night);
+  $('#wxTemp').innerHTML = `${Math.round(cur.temperature_2m)}<small>°${UNIT}</small>`;
+  $('#wxLbl').textContent = info[0];
+  const d = w.daily;
+  $('#wxSub').textContent = '';
+  let days = '';
+  for (let i = 1; i <= 2 && i < d.time.length; i++) {
+    const dt = new Date(d.time[i] + 'T12:00:00'); const inf = WX[d.weather_code[i]] || ['', 'cloud'];
+    days += `<div class="wd">${DOW[dt.getDay()]}${wxIcon(inf[1], false)}<b>${Math.round(d.temperature_2m_max[i])}°</b></div>`;
+  }
+  $('#wxDays').innerHTML = days;
+  $('#wxFoot').textContent = `H ${Math.round(d.temperature_2m_max[0])}° · L ${Math.round(d.temperature_2m_min[0])}° · FEELS ${Math.round(cur.apparent_temperature)}° · RAIN ${d.precipitation_probability_max[0] ?? 0}% · WIND ${Math.round(cur.wind_speed_10m)} ${UNIT === 'F' ? 'MPH' : 'KM/H'}`;
+  $('#wxMini').innerHTML = `${Math.round(cur.temperature_2m)}° ${esc(info[0].toUpperCase())}`;
+}
+
+function eventsOn(day) {
+  const a = day.getTime(), b = addDaysD(day, 1).getTime();
+  return S.events.filter((e) => {
+    const s = e.start.getTime(), en = e.end.getTime();
+    if (e.allDay) return s < b && en > a;
+    return s >= a && s < b;
+  }).sort((x, y) => (y.allDay - x.allDay) || (x.start - y.start));
+}
+function holidaysOn(day) {
+  const a = day.getTime(), b = addDaysD(day, 1).getTime();
+  const list = S.holidays.filter((h) => h.start.getTime() < b && h.end.getTime() > a);
+  const seen = new Set();
+  return list.filter((h) => (seen.has(h.title) ? false : seen.add(h.title))).sort((x, y) => y.public - x.public);
+}
+
+function chipHtml(e, now) {
+  const past = !e.allDay && e.end <= now && !(e.start <= now && e.end > now) ? ' past' : '';
+  const live = !e.allDay && e.start <= now && e.end > now ? ' now' : '';
+  const ic = e.kind !== 'gen' ? ICONS[e.kind] : (e.important ? ICONS.alert : '');
+  const tm = e.allDay ? 'ALL DAY' : fmtTime(e.start);
+  return `<div class="ev${e.important ? ' imp' : ''}${past}${live}" style="--mc:${esc(e.color)}">
+    <div class="tm">${ic}${tm}</div><div class="nm">${esc(e.title)}</div><div class="who">${esc(e.who)}</div></div>`;
+}
+
+function renderWeek() {
+  const now = new Date(); const t0 = startOfDay(now);
+  const cols = $('#cols'); let html = ''; let total = 0, prio = 0;
+  const daily = S.wx && S.wx.daily;
+  for (let i = 0; i < 7; i++) {
+    const d = addDaysD(t0, i); const evs = eventsOn(d); const hs = holidaysOn(d);
+    total += evs.length; prio += evs.filter((e) => e.important).length;
+    let wxh = '';
+    if (daily) {
+      const k = daily.time.indexOf(`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`);
+      if (k >= 0) wxh = `<div class="cw">${wxIcon((WX[daily.weather_code[k]] || ['', 'cloud'])[1], false)}${Math.round(daily.temperature_2m_max[k])}°</div>`;
+    }
+    const wk = d.getDay() === 0 || d.getDay() === 6 ? ' wkend' : '';
+    html += `<div class="col${i === 0 ? ' today' : ''}${wk}" data-day="${d.getTime()}">
+      ${i === 0 ? '<div class="tag">TODAY</div>' : ''}
+      <div class="ch"><div><div class="dow">${i === 1 ? 'TMRW' : DOW[d.getDay()]}</div><div class="dnum">${pad(d.getDate())}</div></div>${wxh}</div>
+      <div class="evs">${hs.map((h) => `<div class="hol${h.public ? '' : ' obs'}">✦ ${esc(h.title)}</div>`).join('')}${evs.map((e) => chipHtml(e, now)).join('')}${!evs.length && !hs.length ? '<div class="empty">NO<br>MISSIONS</div>' : ''}</div>
+    </div>`;
+  }
+  cols.innerHTML = html;
+  // fit chips: hide overflow and add "+N MORE"
+  cols.querySelectorAll('.evs').forEach((box) => {
+    let hidden = 0;
+    const items = [...box.children].filter((c) => !c.classList.contains('empty'));
+    while (box.scrollHeight > box.clientHeight + 1 && items.length > 1) { items.pop().remove(); hidden++; }
+    if (hidden) {
+      const m = document.createElement('div'); m.className = 'more'; m.textContent = `+${hidden} MORE`; box.appendChild(m);
+      while (box.scrollHeight > box.clientHeight + 1 && items.length > 1) { items.pop().remove(); hidden++; m.textContent = `+${hidden} MORE`; }
+    }
+  });
+  $('#wkStat').textContent = `${total} EVENT${total === 1 ? '' : 'S'} · ${prio} PRIORITY`;
+}
+
+function nextTarget(now) {
+  const horizon = now.getTime() + 45 * DAY;
+  const upcoming = S.events.filter((e) => (e.allDay ? e.end > now : e.start > now) && e.start.getTime() < horizon);
+  const imp = upcoming.find((e) => e.important && !(e.allDay && e.start <= now));
+  return imp ? { e: imp, imp: true } : (upcoming.find((e) => !(e.allDay && e.start <= now)) ? { e: upcoming.find((e) => !(e.allDay && e.start <= now)), imp: false } : null);
+}
+
+function renderNext(now) {
+  const t = nextTarget(now); const p = $('#pNext');
+  if (!t) {
+    p.classList.remove('hot'); p.querySelector('.hotPulse')?.remove();
+    $('#nxLbl').textContent = 'NEXT PRIORITY';
+    $('#nxTitle').textContent = S.configured ? 'All clear' : 'Calendar not linked yet';
+    $('#nxMeta').textContent = S.configured ? 'No upcoming events in the next 45 days' : 'Check CALENDARS in Code.gs';
+    $('#nxCount').innerHTML = ''; return;
+  }
+  const e = t.e;
+  const soon = t.imp && e.start - now < 3 * DAY;
+  p.classList.toggle('hot', soon);
+  if (soon && !p.querySelector('.hotPulse')) p.insertAdjacentHTML('afterbegin', '<div class="hotPulse"></div>');
+  if (!soon) p.querySelector('.hotPulse')?.remove();
+  $('#nxLbl').textContent = t.imp ? 'NEXT PRIORITY' : 'NEXT EVENT';
+  $('#nxTitle').textContent = e.title;
+  $('#nxMeta').textContent = `${e.who.toUpperCase()} · ${dayWord(e.start, now)}${e.allDay ? '' : ' ' + fmtTime(e.start)}${e.loc ? ' · ' + e.loc.split(',')[0] : ''}`;
+  let ms = Math.max(0, e.start - now);
+  const d = Math.floor(ms / DAY); ms -= d * DAY; const h = Math.floor(ms / 3600000); ms -= h * 3600000;
+  const m = Math.floor(ms / 60000); const s = Math.floor((ms - m * 60000) / 1000);
+  $('#nxCount').innerHTML = `T-MINUS ${d ? `<b>${pad(d)}</b>D` : ''}<b>${pad(h)}</b>H<b>${pad(m)}</b>M<b>${pad(s)}</b>S`;
+}
+
+function syncStatus() {
+  const dot = $('#syncDot'), txt = $('#syncTxt');
+  const age = S.lastSync ? Date.now() - S.lastSync : Infinity;
+  dot.className = 'dot' + (age < 30 * 60000 && !S.syncErr ? '' : age < 6 * 3600000 ? ' warn' : ' bad');
+  txt.textContent = S.lastSync ? (S.syncErr ? 'CACHED ' : 'LIVE ') + fmtTime(new Date(S.lastSync), false) : 'NO LINK';
+}
+
+/* ---------- ticker ---------- */
+let tickI = 0;
+function tickerMsgs(now) {
+  const n = minsNow(now); const out = [];
+  if (n >= 240 && n < 720) out.push('सुप्रभात · GOOD MORNING, ' + (CFG.familyName || 'FAMILY').toUpperCase());
+  else if (n >= 720 && n < 990) out.push('GOOD AFTERNOON · STAY HYDRATED');
+  else if (n >= 990 && n < 1290) out.push('शुभ संध्या · GOOD EVENING');
+  else out.push('शुभ रात्रि · GOOD NIGHT');
+  const today = eventsOn(startOfDay(now));
+  const left = today.filter((e) => e.allDay || e.start > now).length;
+  out.push(today.length ? `${today.length} EVENT${today.length > 1 ? 'S' : ''} TODAY · ${left} REMAINING` : 'NO EVENTS TODAY · ENJOY THE DAY');
+  const t = nextTarget(now); if (t && t.imp) out.push(`NEXT PRIORITY: ${t.e.title.toUpperCase()} · ${rel(t.e.start - now).toUpperCase()}`);
+  const fest = S.holidays.filter((h) => h.public && h.start > now).sort((a, b) => a.start - b.start)[0];
+  if (fest) { const dd = Math.ceil((startOfDay(fest.start) - startOfDay(now)) / DAY); out.push(`✦ ${fest.title.toUpperCase()} IN ${dd} DAY${dd > 1 ? 'S' : ''}`); }
+  const tom = eventsOn(addDaysD(startOfDay(now), 1)).filter((e) => e.important);
+  if (tom.length) out.push(`TOMORROW: ${tom.map((e) => e.title.toUpperCase()).join(' · ')}`);
+  if (S.wx && S.wx.daily && (S.wx.daily.precipitation_probability_max[0] || 0) >= 50) out.push('☂ RAIN LIKELY TODAY · CARRY AN UMBRELLA');
+  if (!S.configured) out.push('CALENDAR NOT LINKED · SEE SETUP GUIDE');
+  return out;
+}
+function rotateTicker() {
+  const msgs = tickerMsgs(new Date()); const el = $('#tickTxt');
+  el.style.opacity = 0;
+  setTimeout(() => { el.textContent = msgs[tickI++ % msgs.length]; el.style.opacity = 1; }, 400);
+}
+
+/* ---------- transmission carousel ---------- */
+let slides = [], slideI = 0, slideTimer = null, riddleTimer = null;
+function mantraSlot(now) { const n = minsNow(now); if (n >= 240 && n < 720) return 'morning'; if (n >= 990 && n < 1320) return 'evening'; return null; }
+function mantraFor(now) {
+  const slot = mantraSlot(now) || 'evening';
+  const list = MANTRAS[slot]; return { slot, m: list[dayIndex(now, list.length, slot === 'evening' ? 3 : 0)] };
+}
+function buildSlides(now) {
+  const out = [];
+  const { slot, m } = mantraFor(now);
+  out.push({ type: 'mantra', slot, m });
+  const q = QUOTES[dayIndex(now, QUOTES.length)]; out.push({ type: 'quote', q });
+  out.push({ type: 'msg', text: MESSAGES[dayIndex(now, MESSAGES.length, 1)] });
+  const soon = (keep, days) => S.holidays.filter((h) => keep(h) && h.start > now && h.start - now < days * DAY).sort((a, b) => a.start - b.start)[0];
+  const fest = soon((h) => h.panchang && h.public, 30); // next Hindu festival
+  const usHol = soon((h) => !h.panchang && h.public, 45); // next US public holiday
+  if (fest) out.push({ type: 'fest', h: fest });
+  if (usHol) out.push({ type: 'fest', h: usHol, us: true });
+  out.push({ type: 'fact', text: FACTS[dayIndex(now, FACTS.length, 2)] });
+  out.push({ type: 'riddle', r: RIDDLES[dayIndex(now, RIDDLES.length, 5)] });
+  return out;
+}
+function slideHtml(s, now) {
+  switch (s.type) {
+    case 'mantra': {
+      const two = [s.m.lines.slice(0, 2).map((l) => l[0]).join(' '), s.m.lines.slice(2).map((l) => l[0]).join(' ')];
+      return { tag: `${s.slot === 'morning' ? 'MORNING' : 'EVENING'} MANTRA · ${s.m.name.toUpperCase()}`,
+        html: `<div class="mWrap"><div class="mTxt"><div class="dev">${esc(two[0])}<br>${esc(two[1])}</div><div class="mMean">${esc(s.m.meaning)}</div></div>
+        <div class="play" id="playBtn">${ICONS.play}<small>PLAY</small></div></div>` };
+    }
+    case 'quote': return { tag: 'QUOTE OF THE DAY', html: `<div class="q">“${esc(s.q[0])}”</div><div class="by">— ${esc(s.q[1]).toUpperCase()}</div>` };
+    case 'msg': return { tag: 'MISSION BRIEFING · MESSAGE OF THE DAY', html: `<div class="q big">${esc(s.text)}</div>` };
+    case 'fact': return { tag: 'DATA BURST · DID YOU KNOW?', html: `<div class="q">${esc(s.text)}</div>` };
+    case 'fest': { const dd = Math.ceil((startOfDay(s.h.start) - startOfDay(now)) / DAY);
+      return { tag: s.us ? 'UPCOMING US HOLIDAY' : 'UPCOMING FESTIVAL', html: `<div class="q big" style="color:var(--amber)">${s.us ? '★' : '✦'} ${esc(s.h.title)}</div><div class="by" style="color:var(--amber)">${dayWord(s.h.start, now)} · ${dd === 1 ? 'TOMORROW' : 'IN ' + dd + ' DAYS'}</div>` }; }
+    case 'riddle': return { tag: 'BRAIN TEASER · RIDDLE OF THE DAY', html: `<div class="q">${esc(s.r[0])}</div><div class="ans"><span class="lbl">DECRYPTING</span><span id="ansTxt">▒▒▒▒▒▒</span></div>` };
+  }
+}
+function showSlide(i) {
+  const now = new Date(); slideI = (i + slides.length) % slides.length;
+  const s = slides[slideI]; const r = slideHtml(s, now); const box = $('#txSlide');
+  box.classList.add('out');
+  clearInterval(riddleTimer);
+  setTimeout(() => {
+    $('#txTag').textContent = r.tag; box.innerHTML = r.html; box.classList.remove('out');
+    $('#txDots').innerHTML = slides.map((_, k) => `<i class="${k === slideI ? 'on' : ''}"></i>`).join('');
+    const pb = $('#playBtn'); if (pb) pb.onclick = (ev) => { ev.stopPropagation(); playMantra(s.m, s.slot); };
+    if (s.type === 'riddle') revealRiddle(s.r[1]);
+  }, 500);
+}
+function revealRiddle(answer) {
+  const el = () => $('#ansTxt'); let t = 0; const chars = '▒░▓#$%&@*+=?ABCDEFGHJKLMNPQRSTUVWXYZ';
+  setTimeout(() => {
+    riddleTimer = setInterval(() => {
+      t++; const e = el(); if (!e) return clearInterval(riddleTimer);
+      const done = Math.floor(t / 2);
+      e.textContent = answer.split('').map((c, k) => (k < done || c === ' ' ? c : chars[Math.floor(Math.random() * chars.length)])).join('');
+      if (done >= answer.length) { clearInterval(riddleTimer); e.previousElementSibling.textContent = 'ANSWER'; }
+    }, 70);
+  }, 9000);
+}
+function startCarousel() {
+  slides = buildSlides(new Date()); showSlide(0);
+  clearInterval(slideTimer); slideTimer = setInterval(() => showSlide(slideI + 1), 20000);
+}
+
+/* ---------- day detail ---------- */
+function openDay(ts) {
+  const d = new Date(+ts), now = new Date(); const evs = eventsOn(d); const hs = holidaysOn(d);
+  $('#dayTtl').textContent = `${DOWL[d.getDay()]} · ${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()} · ${evs.length} EVENT${evs.length === 1 ? '' : 'S'}`;
+  let html = hs.map((h) => `<div class="dl" style="--mc:var(--amber)"><div class="t">FESTIVAL</div><div><div class="n" style="color:var(--amber)">✦ ${esc(h.title)}</div><div class="m">${esc(h.desc.split('\n')[0])}</div></div></div>`).join('');
+  html += evs.map((e) => `<div class="dl${e.important ? ' imp' : ''}" style="--mc:${esc(e.color)}"><div class="t">${e.allDay ? 'ALL DAY' : fmtTime(e.start) + '<br><span style="color:var(--faint)">→ ' + fmtTime(e.end) + '</span>'}</div>
+     <div><div class="n">${e.important ? '⚠ ' : ''}${esc(e.title)}</div><div class="m">${esc(e.who)}${e.loc ? ' · ' + esc(e.loc) : ''}${e.desc ? '\n' + esc(e.desc.slice(0, 160)) : ''}</div></div></div>`).join('');
+  $('#dayList').innerHTML = html || '<div class="empty" style="margin-top:80px">NO MISSIONS SCHEDULED</div>';
+  $('#dayOv').classList.add('show');
+}
+
+/* ---------- alerts ---------- */
+let alertCur = null, alertChimeAt = 0;
+function checkAlerts(now) {
+  if ($('#mantraOv').classList.contains('show')) return;
+  const acks = store.get('nx-acks', {});
+  const stages = (CFG.reminderMinutes || []).slice().sort((a, b) => a - b); // smallest matching stage wins
+  let best = null;
+  for (const e of S.events) {
+    if (!e.important || e.allDay && e.start < startOfDay(now)) continue;
+    const lead = e.start - now; if (lead < -15 * 60000) continue;
+    for (const th of stages) {
+      if (lead <= th * 60000) {
+        const k = e.key + '#' + th;
+        if (!acks[k] && (!best || e.start < best.e.start)) best = { e, k };
+        break;
+      }
+    }
+  }
+  if (best) {
+    const e = best.e; alertCur = best;
+    $('#alertIc').innerHTML = ICONS[e.kind] || ICONS.alert;
+    $('#alertN').textContent = e.title;
+    $('#alertW').textContent = `${e.who.toUpperCase()} · ${dayWord(e.start, now)}${e.allDay ? '' : ' · ' + fmtTime(e.start)}${e.loc ? ' · ' + e.loc.split(',')[0].toUpperCase() : ''}`;
+    $('#alertC').textContent = (e.start - now > 0 ? 'T-MINUS ' + rel(e.start - now).replace('in ', '') : 'HAPPENING NOW').toUpperCase();
+    if (!$('#alertOv').classList.contains('show')) { $('#alertOv').classList.add('show'); alertChimeAt = 0; }
+    if (Date.now() - alertChimeAt > 15 * 60000 && !isNight(now)) { AU.chime('alert'); alertChimeAt = Date.now(); }
+  } else { $('#alertOv').classList.remove('show'); alertCur = null; }
+  // heads-up toast for any event starting soon
+  const hu = (CFG.headsUpMinutes || 0) * 60000;
+  if (hu) {
+    const shown = store.get('nx-hu', {});
+    const e = S.events.find((x) => !x.allDay && x.start - now > 0 && x.start - now <= hu && !shown[x.key]);
+    if (e && !best) {
+      shown[e.key] = 1; store.set('nx-hu', shown);
+      $('#toastN').textContent = e.title; $('#toastM').textContent = `${e.who} · ${fmtTime(e.start)} · ${rel(e.start - now)}`;
+      $('#toast').style.setProperty('--mc', e.color); $('#toast').classList.add('show');
+      if (!isNight(now)) AU.chime('soft');
+      setTimeout(() => $('#toast').classList.remove('show'), 120000);
+    }
+  }
+}
+
+/* ---------- mantra player ---------- */
+let mantraRun = 0;
+async function playMantra(m, slot) {
+  if (!AU.unlocked) AU.unlock();
+  const run = ++mantraRun;
+  $('#mKind').textContent = (slot === 'morning' ? 'MORNING' : 'EVENING') + ' MANTRA';
+  $('#mTitle').textContent = m.title;
+  $('#mLines').innerHTML = m.lines.map((l) => `<div class="ln">${esc(l[0])}</div><div class="tr">${esc(l[1])}</div>`).join('');
+  $('#mMean').textContent = m.meaning;
+  $('#mantraOv').classList.add('show');
+  try { speechSynthesis.cancel(); } catch (e) {}
+  const hi = AU.pick('hi'); const en = AU.pick('en-in') || AU.pick('en');
+  const lines = [...$('#mLines').querySelectorAll('.ln')];
+  const rec = recordingFor(m);
+  if (rec) {
+    const own = !!rec.sync; // recordings from make_mantras.py already have bells at both ends
+    if (!own) { AU.chime('bell'); await new Promise((r) => setTimeout(r, 1500)); }
+    let res = 'stopped';
+    if (GAS && rec.driveId) { // the old Android web view can't play Drive links: fetch through Apps Script
+      $('#mRep').textContent = 'LOADING RECORDING…';
+      try { rec.url = await withTimeout(driveAudio(rec.driveId), 60000); } catch (e) { rec.url = null; S.audioErr = String((e && e.message) || e).slice(0, 80); }
+    }
+    if (rec.url && run === mantraRun) res = await playRecording(rec, run, lines, m);
+    else if (!rec.url) res = 'error';
+    if (res !== 'error') { if (run === mantraRun) { lines.forEach((x) => x.classList.remove('on')); if (!own) AU.chime('bell'); await new Promise((r) => setTimeout(r, own ? 800 : 3000)); } if (run === mantraRun) stopMantra(); return; }
+    // recording failed to load → fall back to the device voice below
+  }
+  AU.droneStart(); AU.chime('bell');
+  await new Promise((r) => setTimeout(r, 2200));
+  for (let rep = 0; rep < (m.reps || 1) && run === mantraRun; rep++) {
+    $('#mRep').textContent = (m.reps || 1) > 1 ? `ROUND ${rep + 1} / ${m.reps}` : '';
+    for (let i = 0; i < m.lines.length && run === mantraRun; i++) {
+      lines.forEach((x, k) => x.classList.toggle('on', k === i));
+      if (hi) await AU.say(m.lines[i][0], { voice: hi, rate: 0.72, pitch: 0.9 });
+      else if (en) await AU.say(m.lines[i][1].replace(/[’']/g, ''), { voice: en, rate: 0.72, pitch: 0.9 });
+      else await new Promise((r) => setTimeout(r, 4200));
+      await new Promise((r) => setTimeout(r, 450));
+    }
+  }
+  if (run === mantraRun) { lines.forEach((x) => x.classList.remove('on')); AU.chime('bell'); await new Promise((r) => setTimeout(r, 3500)); }
+  if (run === mantraRun) stopMantra();
+}
+/* Real recordings: CFG.mantraAudio = { gayatri: "<link>" | { url: "<link>", rounds: 3 }, ... }
+   Google Drive share links are converted to direct-download links (file must be shared "Anyone with the link"). */
+let curAudio = null;
+function recordingFor(m) {
+  const a = (CFG.mantraAudio || {})[m.id]; if (!a) return null;
+  const url = typeof a === 'string' ? a : a.url; if (!url) return null;
+  const dm = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
+  return { url: dm ? 'https:\/\/drive.google.com\/uc?export=download&id=' + dm[1] : url, driveId: dm ? dm[1] : null, rounds: (typeof a === 'object' && a.rounds) || 1,
+    sync: (CFG.mantraMarks || {})[m.id] || null };
+}
+const audioCache = {};
+function driveAudio(id) {
+  if (!audioCache[id]) {
+    audioCache[id] = gas('getAudio', id, window.FD_KEY || '').then((b64) => {
+      const b = atob(b64); const a = new Uint8Array(b.length);
+      for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i);
+      return URL.createObjectURL(new Blob([a], { type: 'audio/mpeg' }));
+    });
+    audioCache[id].catch(() => { delete audioCache[id]; });
+  }
+  return audioCache[id];
+}
+/* Line index for time t: exact marks from tools/make_mantras.py when the file is that recording
+   (same length ±1.5 s), otherwise split the recording evenly. */
+function segAt(rec, el, segs) {
+  const s = rec.sync, d = el.duration;
+  if (s && s.marks && s.marks.length && Math.abs(d - s.duration) < 1.5) {
+    let k = 0; while (k + 1 < s.marks.length && el.currentTime >= s.marks[k + 1] - 0.15) k++;
+    return el.currentTime < s.marks[0] - 0.3 ? -1 : k;
+  }
+  return Math.min(segs - 1, Math.floor((el.currentTime / d) * segs));
+}
+function playRecording(rec, run, lines, m) {
+  return new Promise((resolve) => {
+    const el = new Audio(); curAudio = el; el.preload = 'auto'; el.src = rec.url;
+    const exact = rec.sync && rec.sync.marks;
+    const rounds = exact ? Math.max(1, Math.round(rec.sync.marks.length / m.lines.length)) : rec.rounds;
+    const segs = m.lines.length * rounds;
+    el.ontimeupdate = () => {
+      if (run !== mantraRun) return;
+      const d = el.duration; if (!d || !isFinite(d)) return;
+      const seg = segAt(rec, el, segs);
+      lines.forEach((x, k) => x.classList.toggle('on', seg >= 0 && k === seg % m.lines.length));
+      $('#mRep').textContent = rounds > 1 && seg >= 0 ? `ROUND ${Math.floor(seg / m.lines.length) + 1} / ${rounds}` : '♪ RECORDING';
+    };
+    el.onended = () => resolve('ended');
+    el.onerror = () => resolve('error');
+    const timer = setTimeout(() => { if (el.readyState < 2) { el.pause(); resolve('error'); } }, 20000);
+    el.onplaying = () => clearTimeout(timer);
+    const p = el.play(); if (p && p.catch) p.catch(() => resolve('error'));
+  });
+}
+function stopMantra() {
+  if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; }
+  mantraRun++; try { speechSynthesis.cancel(); } catch (e) {}
+  AU.droneStop(); $('#mantraOv').classList.remove('show');
+}
+
+/* ---------- night mode ---------- */
+function isNight(now) { const n = CFG.nightMode; return !!(n && n.start && inWindow(now, n.start, n.end)); }
+function renderNight(now) {
+  const ov = $('#nightOv'); const on = isNight(now) && Date.now() > S.nightPeek && !$('#alertOv').classList.contains('show') && !$('#mantraOv').classList.contains('show');
+  ov.classList.toggle('show', on);
+  if (!on) return;
+  $('#nT').textContent = fmtTime(now);
+  $('#nD').textContent = `${DOWL[now.getDay()]} · ${now.getDate()} ${MON[now.getMonth()]}`;
+  const t = S.events.find((e) => e.start > now && !e.allDay);
+  $('#nN').textContent = t ? `Next: ${t.title} · ${dayWord(t.start, now).toLowerCase()} ${fmtTime(t.start)}` : '';
+  if (now.getSeconds() === 0 || !ov.dataset.placed) {
+    ov.dataset.placed = 1; const nc = $('#nightClock');
+    nc.style.left = (180 + Math.random() * 300) + 'px'; nc.style.top = (120 + Math.random() * 260) + 'px';
+  }
+}
+
+/* ---------- scheduled voice moments ---------- */
+/* Morning briefing: a full-screen card with a sunrise chime (the tablet's web view has no speech).
+   Closes on "START THE DAY" or after 15 minutes. Where a voice exists (e.g. a PC browser), it is also read out. */
+let briefTimer = null;
+function showBriefing(now) {
+  const d0 = startOfDay(now); const evs = eventsOn(d0); const hs = holidaysOn(d0);
+  const h = now.getHours();
+  const greet = h < 12 ? ['Good morning', 'सुप्रभातम्'] : h < 17 ? ['Good afternoon', 'शुभ दिनम्'] : ['Good evening', 'शुभ सन्ध्या'];
+  $('#bHi').innerHTML = `${esc(greet[0])}, ${esc(CFG.familyName || 'Family')}<span class="sa">${greet[1]}</span>`;
+  $('#bDt').innerHTML = `${DOWL[now.getDay()]} · ${pad(now.getDate())} ${MON[now.getMonth()]} ${now.getFullYear()}${S.tithi ? ` · <b>${esc(S.tithi)}</b>` : ''}`;
+  const w = S.wx;
+  if (w && w.current) {
+    const info = WX[w.current.weather_code] || ['—', 'cloud']; const dl = w.daily;
+    $('#bWx').innerHTML = `<div class="ic">${wxIcon(info[1], !w.current.is_day)}</div><div class="t">${Math.round(w.current.temperature_2m)}°<span style="font-size:18px">${UNIT}</span></div>
+      <div class="c">${esc(info[0])}</div>
+      <div class="m">HIGH ${Math.round(dl.temperature_2m_max[0])}° · LOW ${Math.round(dl.temperature_2m_min[0])}°<br>FEELS ${Math.round(w.current.apparent_temperature)}° · RAIN ${dl.precipitation_probability_max[0] ?? 0}%<br>${esc((CFG.city && CFG.city.name || '').toUpperCase())}</div>`;
+  } else $('#bWx').innerHTML = `<div class="c" style="color:var(--dim)">Weather unavailable</div>`;
+  const rows = hs.map((x) => `<div class="bl fest" style="--mc:var(--amber)"><div class="t">FESTIVAL</div><div style="min-width:0"><div class="n">✦ ${esc(x.title)}</div></div></div>`)
+    .concat(evs.map((e) => `<div class="bl${e.important ? ' imp' : ''}" style="--mc:${esc(e.color)}"><div class="t">${e.allDay ? 'ALL DAY' : fmtTime(e.start)}</div><div style="min-width:0"><div class="n">${e.important ? '⚠ ' : ''}${esc(e.title)}</div><div class="w">${esc(String(e.who).toUpperCase())}</div></div></div>`));
+  const MAX = 6;
+  $('#bList').innerHTML = `<div class="h">TODAY'S MISSIONS · ${evs.length}</div>` + (rows.length ? rows.slice(0, MAX).join('') + (rows.length > MAX ? `<div class="bl"><div class="t"></div><div class="w">+${rows.length - MAX} MORE ON THE TIMELINE</div></div>` : '') : '<div class="none">Nothing on the calendar today. Enjoy the day!</div>');
+  const t = nextTarget(now);
+  const q = QUOTES[dayIndex(now, QUOTES.length)];
+  $('#bQuote').innerHTML = t && t.imp && startOfDay(t.e.start) > d0
+    ? `Coming up: ${esc(t.e.title)} · ${esc(t.e.who)}, ${esc(dayWord(t.e.start, now).toLowerCase())} ${t.e.allDay ? '' : fmtTime(t.e.start)}<span>NEXT PRIORITY</span>`
+    : `“${esc(q[0])}”<span>${esc(q[1])}</span>`;
+  let r = ''; for (let i = 0; i < 24; i++) r += `<line x1="0" y1="-215" x2="0" y2="-290" transform="rotate(${i * 15})"/>`;
+  $('#bRays').innerHTML = r;
+  $('#briefOv').classList.add('show');
+  clearTimeout(briefTimer); briefTimer = setTimeout(hideBriefing, 15 * 60000);
+}
+function hideBriefing() { clearTimeout(briefTimer); $('#briefOv').classList.remove('show'); try { speechSynthesis.cancel(); } catch (e) {} }
+async function morningBriefing(now) {
+  showBriefing(now);
+  AU.chime('sunrise');
+  const voice = AU.pick('en-in') || AU.pick('en'); if (!voice) return;
+  await new Promise((r) => setTimeout(r, 2200));
+  const today = eventsOn(startOfDay(now));
+  let text = `Good morning, ${CFG.familyName || 'family'}. Today is ${DOWL[now.getDay()].toLowerCase()}, ${now.getDate()} ${['January','February','March','April','May','June','July','August','September','October','November','December'][now.getMonth()]}. `;
+  if (S.wx && S.wx.current) text += `It is ${Math.round(S.wx.current.temperature_2m)} degrees, ${(WX[S.wx.current.weather_code] || [''])[0].toLowerCase()}, with a high of ${Math.round(S.wx.daily.temperature_2m_max[0])}. `;
+  if (!today.length) text += 'There are no events on the calendar today. ';
+  else { text += `You have ${today.length} event${today.length > 1 ? 's' : ''} today. `; today.slice(0, 5).forEach((e) => { text += `${e.allDay ? '' : 'At ' + fmtTime(e.start) + ', '}${e.title}${e.member ? ' for ' + e.who : ''}. `; }); }
+  const t = nextTarget(now); if (t && t.imp && startOfDay(t.e.start) > startOfDay(now)) text += `Coming up: ${t.e.title}, ${rel(t.e.start - now)}. `;
+  text += 'Have a wonderful day.';
+  if ($('#briefOv').classList.contains('show')) AU.say(text, { voice, rate: 0.95, maxMs: 60000 });
+}
+function scheduled(now) {
+  if (isNight(now)) return;
+  const hhmm = pad(now.getHours()) + ':' + pad(now.getMinutes());
+  const done = store.get('nx-done', {}); const dk = dayKey(now);
+  const once = (id, fn) => { const k = id + dk; if (!done[k]) { done[k] = 1; store.set('nx-done', done); fn(); } };
+  // the briefing card works without sound; it only needs the audio unlock for its chime
+  if (CFG.morningBriefing && hhmm === CFG.morningBriefing) once('mb', () => morningBriefing(now));
+  if (!AU.unlocked) return;
+  const ma = CFG.mantraAutoplay || {};
+  if (ma.morning && hhmm === ma.morning) once('mm', () => { const r = mantraFor(now); playMantra(r.m, r.slot); });
+  if (ma.evening && hhmm === ma.evening) once('me', () => { const r = mantraFor(now); playMantra(r.m, r.slot); });
+}
+
+/* ---------- boot ---------- */
+async function boot() {
+  const lines = ['NEXUS OS v3.1 · FAMILY COMMAND DECK', 'LINKING CALENDAR UPLINK ........', 'CALIBRATING ATMOSPHERIC SENSORS ..', 'SYNCHRONIZING LUNAR EPHEMERIS ....', 'LOADING MANTRA ARCHIVE ...........', 'ALL SYSTEMS NOMINAL'];
+  const box = $('#bootTxt'); box.innerHTML = '';
+  setTimeout(() => ($('#bootBar i').style.width = '100%'), 50);
+  for (let i = 0; i < lines.length; i++) {
+    await new Promise((r) => setTimeout(r, 330));
+    const ok = i === 0 ? '' : i === lines.length - 1 ? '' : ' <span class="ok">OK</span>';
+    box.innerHTML += (i === lines.length - 1 ? '<span class="ok">' + lines[i] + '</span>' : lines[i] + ok) + '\n';
+  }
+  await new Promise((r) => setTimeout(r, 500));
+  $('#bootOv').classList.add('hide');
+}
+
+/* ---------- master render + loop ---------- */
+function renderAll() {
+  const now = new Date();
+  renderWeek(); renderNext(now); renderSky(now); renderWeather(); syncStatus();
+  slides = buildSlides(now); if (slideI >= slides.length) slideI = 0;
+}
+function tick() {
+  const now = new Date();
+  renderClock(now); renderNext(now); renderNight(now);
+  if (now.getSeconds() % 30 === 0) { checkAlerts(now); syncStatus(); }
+  if (now.getSeconds() === 0) { renderWeek(); scheduled(now); }
+  const dk = dayKey(now);
+  if (dk !== S.dayKey) { if (S.dayKey) { renderAll(); startCarousel(); } S.dayKey = dk; }
+  if (now.getHours() === 3 && now.getMinutes() === 30 && now.getSeconds() === 0) location.reload();
+}
+
+function fit() {
+  const s = Math.min(innerWidth / 960, innerHeight / 600);
+  $('#stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+function stars() {
+  let sh = []; const W = Math.max(innerWidth, 1400), H = Math.max(innerHeight, 900) * 2;
+  for (let i = 0; i < 140; i++) {
+    const x = Math.random() * W, y = Math.random() * H, a = (0.25 + Math.random() * 0.75).toFixed(2);
+    const c = Math.random() < 0.15 ? `rgba(157,125,255,${a})` : Math.random() < 0.3 ? `rgba(62,232,255,${a})` : `rgba(255,255,255,${a})`;
+    sh.push(`${x.toFixed(0)}px ${y.toFixed(0)}px 0 ${Math.random() < 0.1 ? 1 : 0}px ${c}`);
+  }
+  $('#stars').style.boxShadow = sh.join(',');
+}
+function ticks() {
+  let g = '';
+  for (let i = 0; i < 60; i++) {
+    const a = (i / 60) * Math.PI * 2, big = i % 5 === 0, r1 = big ? 82 : 86, r2 = 90;
+    g += `<line x1="${(Math.sin(a) * r1).toFixed(2)}" y1="${(-Math.cos(a) * r1).toFixed(2)}" x2="${(Math.sin(a) * r2).toFixed(2)}" y2="${(-Math.cos(a) * r2).toFixed(2)}" stroke="${big ? '#3ee8ff' : '#4f6d8a'}" stroke-width="${big ? 1.6 : 0.8}"/>`;
+  }
+  $('#ticks').innerHTML = g;
+  let p = '';
+  for (let i = 0; i < 16; i++) p += `<ellipse cx="0" cy="-150" rx="16" ry="48" fill="none" stroke="#ffc54d" stroke-opacity=".28" transform="rotate(${i * 22.5})"/>`;
+  $('#petals').innerHTML = p;
+}
+
+let wakeLock = null;
+async function keepAwake() {
+  try { if ('wakeLock' in navigator && document.visibilityState === 'visible') { wakeLock = await navigator.wakeLock.request('screen'); } } catch (e) {}
+}
+
+function init() {
+  $('#ttl').textContent = CFG.title || 'NEXUS'; $('#sub').textContent = CFG.subtitle || 'FAMILY COMMAND DECK';
+  fit(); stars(); ticks(); addEventListener('resize', fit);
+  document.addEventListener('pointerdown', () => { if (!AU.unlocked) AU.unlock(); if (isNight(new Date())) { S.nightPeek = Date.now() + 60000; renderNight(new Date()); } }, true);
+  $('#cols').addEventListener('click', (e) => { const c = e.target.closest('.col'); if (c) openDay(c.dataset.day); });
+  document.querySelectorAll('[data-close]').forEach((b) => (b.onclick = () => $('#' + b.dataset.close).classList.remove('show')));
+  $('#dayOv').addEventListener('click', (e) => { if (e.target.id === 'dayOv') $('#dayOv').classList.remove('show'); });
+  $('#alertAck').onclick = () => { if (alertCur) { const a = store.get('nx-acks', {}); a[alertCur.k] = Date.now(); store.set('nx-acks', a); } $('#alertOv').classList.remove('show'); checkAlerts(new Date()); };
+  $('#mStop').onclick = stopMantra;
+  $('#bGo').onclick = hideBriefing;
+  $('#pClock').onclick = () => showBriefing(new Date()); // tap the clock for today's briefing
+  $('#toast').onclick = () => $('#toast').classList.remove('show');
+  $('#syncDot').parentNode.onclick = () => {
+    const v = AU.voices(); const langs = [...new Set(v.map((x) => x.lang))].join(', ') || 'none';
+    $('#toastN').textContent = 'Diagnostics';
+    $('#toastM').textContent = `Source: ${GAS ? 'Google Apps Script' : 'local preview'} · Events: ${S.events.length} · Holidays: ${S.holidays.length} · Last error: ${S.syncErr || 'none'} · Weather: ${S.wxErr || (S.wx ? 'ok' : 'waiting')} · US holidays: ${S.holidayInfo || '?'} · Audio: ${S.audioErr || 'ok'} · Hindi voice: ${AU.pick('hi') ? 'yes' : 'no'} · Voices: ${langs}`;
+    $('#toast').classList.add('show');
+  };
+  $('#logo').onclick = () => { $('#bootOv').classList.remove('hide'); boot(); loadData(); loadWeather(); };
+  $('#txSlide').onclick = () => { showSlide(slideI + 1); clearInterval(slideTimer); slideTimer = setInterval(() => showSlide(slideI + 1), 20000); };
+  document.addEventListener('visibilitychange', keepAwake); keepAwake();
+
+  // prune old local records
+  const cut = Date.now() - 30 * DAY;
+  const acks = store.get('nx-acks', {}); for (const k in acks) if (acks[k] < cut) delete acks[k]; store.set('nx-acks', acks);
+  const dn = store.get('nx-done', {}); const keep = {}; const dk = dayKey(new Date()); for (const k in dn) if (k.endsWith(String(dk))) keep[k] = 1; store.set('nx-done', keep);
+
+  S.wx = store.get('nx-wx', null);
+  applyPayload(store.get('nx-cache', null)); startCarousel();
+  boot(); loadData().then(() => { startCarousel(); checkAlerts(new Date()); }); loadWeather();
+  S.dayKey = dayKey(new Date());
+  tick(); setInterval(tick, 1000);
+  setInterval(rotateTicker, 7000); rotateTicker();
+  setInterval(loadData, Math.max(2, CFG.refreshMinutes || 10) * 60000);
+  setInterval(loadWeather, 30 * 60000);
+}
+init();
+</script>
+</body>
+</html>

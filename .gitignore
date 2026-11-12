@@ -1,0 +1,16 @@
+# Private: family access key, settings (calendar IDs, Drive links) and the builds that contain them
+access-key.txt
+src/config.local.json
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

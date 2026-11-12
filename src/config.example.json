@@ -1,0 +1,107 @@
+{
+  "title": "NEXUS",
+  "subtitle": "FAMILY COMMAND DECK",
+  "familyName": "Family",
+  "hour12": true,
+  "city": {
+    "name": "Boston",
+    "lat": 42.3601,
+    "lon": -71.0589
+  },
+  "units": "F",
+  "members": [
+    {
+      "name": "Alex",
+      "color": "#3ee8ff",
+      "match": [
+        "alex"
+      ]
+    },
+    {
+      "name": "Priya",
+      "color": "#ff6fd0",
+      "match": [
+        "priya"
+      ]
+    },
+    {
+      "name": "Maya",
+      "color": "#7dff8a",
+      "match": [
+        "maya"
+      ]
+    },
+    {
+      "name": "Dev",
+      "color": "#ffc54d",
+      "match": [
+        "dev"
+      ]
+    }
+  ],
+  "familyColor": "#a98bff",
+  "importantKeywords": [
+    "doctor",
+    "dr.",
+    "dr ",
+    "dentist",
+    "dental",
+    "hospital",
+    "clinic",
+    "checkup",
+    "check-up",
+    "physical",
+    "pediatrician",
+    "vaccine",
+    "vaccination",
+    "flu shot",
+    "physio",
+    "therapy",
+    "blood test",
+    "lab test",
+    "scan",
+    "x-ray",
+    "mri",
+    "ultrasound",
+    "eye exam",
+    "eye test",
+    "surgery",
+    "urgent care",
+    "pharmacy",
+    "important",
+    "urgent"
+  ],
+  "reminderMinutes": [
+    1440,
+    180,
+    60
+  ],
+  "headsUpMinutes": 15,
+  "nightMode": {
+    "start": "22:30",
+    "end": "05:30"
+  },
+  "mantraAutoplay": {
+    "morning": "06:30",
+    "evening": "19:00"
+  },
+  "mantraAudio": {
+    "gayatri": "",
+    "karagre": "",
+    "ganesha": "",
+    "asato": "",
+    "shanti": "",
+    "deepa": "",
+    "mahamrityunjaya": "",
+    "sarve": ""
+  },
+  "panchangMonthly": true,
+  "morningBriefing": "07:15",
+  "refreshMinutes": 10,
+  "calendars": [
+    {
+      "id": "primary",
+      "name": "Family"
+    }
+  ]
+}
