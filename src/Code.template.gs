@@ -50,11 +50,11 @@ function doGet(e) {
     .addMetaTag('viewport', 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no');
 }
 
-/** Called by the dashboard every few minutes. Returns a JSON string. */
-function getData(key) {
+/** Called by the dashboard every 2 minutes (force = true when the logo is tapped). Returns a JSON string. */
+function getData(key, force) {
   checkKey_(key);
   const cache = CacheService.getScriptCache();
-  const hit = cache.get('nexus-data-v2');
+  const hit = force ? null : cache.get('nexus-data-v2');
   if (hit) return hit;
 
   const tz = Session.getScriptTimeZone();
@@ -108,7 +108,7 @@ function getData(key) {
   });
 
   const out = JSON.stringify({ calendars: calendars, holidays: holidays, holidayInfo: holidayInfo.join('; '), configured: CALENDARS.length > 0, fetchedAt: new Date().toISOString() });
-  if (out.length < 95000) cache.put('nexus-data-v2', out, 300);
+  if (out.length < 95000) cache.put('nexus-data-v2', out, 60); // 1 minute: calendar edits show up quickly
   return out;
 }
 

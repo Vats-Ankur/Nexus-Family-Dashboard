@@ -35,13 +35,17 @@ NEXUS turns it into a dedicated wall display that just works:
 | ☀️ **Morning briefing** | At 7:15 a sunrise card with a chime shows the greeting, weather, today's events and the next priority. Tap the clock to see it any time. |
 | 🌦️ **Live weather** | Current conditions, a 7‑day forecast, sunrise/sunset and moon phase (Open‑Meteo, fetched by Google). |
 | 🌙 **Night mode** | A dim, drifting clock overnight. Tap to peek at the full dashboard. |
+| 🔄 **Follows the tablet** | Landscape layout when the tablet stands sideways, a dedicated portrait layout when it's upright. Switches instantly on rotation. |
+| ⚡ **Fast sync** | Calendar edits appear within about 2 minutes. Tap the logo to sync immediately. |
 | 🎲 **Transmission panel** | A rotating card: mantra, quote and message of the day, festival countdowns, fun fact and riddle. |
 | 🔒 **Private by design** | Key‑protected web app, settings in your Google account, and no personal data in this repo. |
 
 ## 📸 Screens
 
-| Morning briefing | Mantra player |
+| Portrait (tablet upright) | Night mode |
 |---|---|
+| <img src="docs/screenshots/dashboard-portrait.png" alt="Portrait layout: clock, priority and weather on top, the 7-day timeline below" width="420"> | <img src="docs/screenshots/night.png" alt="Dim drifting night clock"> |
+| **Morning briefing** | **Mantra player** |
 | <img src="docs/screenshots/briefing.png" alt="Morning briefing card with weather and today's events"> | <img src="docs/screenshots/mantra.png" alt="Gayatri mantra with the current line highlighted"> |
 | **Priority alert** | **Day detail** |
 | <img src="docs/screenshots/alert.png" alt="Full-screen priority alert with countdown"> | <img src="docs/screenshots/day-detail.png" alt="All events and festivals for one day"> |
@@ -67,7 +71,7 @@ flowchart LR
     AS -- "events · weather · audio" --> TAB
 ```
 
-- **Frontend** (`src/dashboard.html`): plain HTML, CSS and JavaScript, no framework, no build step. It renders a 960×600 stage scaled to any screen and includes:
+- **Frontend** (`src/dashboard.html`): plain HTML, CSS and JavaScript, no framework, no build step. It renders a 960×600 stage (600×960 when upright), scaled to any screen, and includes:
   - an iCalendar parser with RRULE expansion;
   - the Panchang astronomy (Meeus algorithms, Lahiri ayanamsa);
   - Web Audio chimes and drone, and the mantra player.
@@ -102,6 +106,7 @@ All settings live in `src/config.local.json` (git‑ignored). Start from [`src/c
 | `mantraAudio` | Google Drive share links for the recordings in `audio/`. |
 | `mantraAutoplay`, `morningBriefing` | Schedule (default 06:30 / 19:00, briefing 07:15). |
 | `nightMode` | Dim clock window, e.g. `{"start":"22:30","end":"05:30"}`, or `null` to stay bright. |
+| `refreshMinutes` | How often the tablet re‑reads the calendars (default 2). The server caches for 1 minute. |
 
 ### Event naming
 

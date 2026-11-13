@@ -97,7 +97,7 @@
   },
   "panchangMonthly": true,
   "morningBriefing": "07:15",
-  "refreshMinutes": 10,
+  "refreshMinutes": 2,
   "calendars": [
     {
       "id": "primary",

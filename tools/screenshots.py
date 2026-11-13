@@ -94,6 +94,11 @@ def main():
         time.sleep(1.5); p.shot("alert")
         p.js(CLEAN); p.js("(() => { openDay(startOfDay(addDaysD(new Date(), 1)).getTime()); })()"); time.sleep(1.5); p.shot("day-detail")
         p.js(CLEAN); p.js("(() => { CFG.nightMode = {start:'00:00', end:'23:59'}; S.nightPeek = 0; renderNight(new Date()); })()"); time.sleep(2.5); p.shot("night")
+        # portrait: the tablet held upright
+        p.js("(() => { CFG.nightMode = null; })()")
+        p.call("Emulation.setDeviceMetricsOverride", width=800, height=1280, deviceScaleFactor=1, mobile=False)
+        p.js("dispatchEvent(new Event('resize'))"); time.sleep(1.5)
+        p.js(CLEAN); p.js("showSlide(0)"); time.sleep(1.5); p.shot("dashboard-portrait")
     finally:
         chrome.terminate(); server.terminate()
         time.sleep(1); shutil.rmtree(profile, ignore_errors=True)

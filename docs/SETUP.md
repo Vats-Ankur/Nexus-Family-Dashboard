@@ -109,7 +109,7 @@ Tested on a Lenovo TAB3 8 (Android 6, WebView 95) with Fully Kiosk Browser 1.61.
 - *Advanced Web → Keep Screen On*: on.
 - *Device Management → Launch on Boot*: on.
 - *Web Auto Reload*: reload on network reconnect, and 60 s after a page error.
-- Fullscreen; landscape orientation.
+- Fullscreen; *Device Management → Screen Orientation*: **Auto**, so the layout follows the tablet. Also turn on Android's **Auto‑rotate** (quick settings).
 - *Unlock Screen*: **off**. When on, it disables the Android lock screen entirely.
 
 **Entering the long link:** typing it on the tablet is painful. With USB debugging on, open the Start URL field and type it from the PC:
@@ -124,7 +124,8 @@ adb shell input text '<your key>'
 - Scheduled mantras need one tap on the screen after each page load. That's a browser rule.
 - The briefing card shows either way.
 - Tap the **clock** for today's briefing.
-- Tap the **NEXUS logo** to reload data.
+- Tap the **NEXUS logo** to sync the calendars now. Otherwise they update every 2 minutes.
+- Turn the tablet: the dashboard switches between the landscape and portrait layouts.
 - Tap **LIVE** for diagnostics.
 
 ## 🔒 Locking it down
@@ -144,7 +145,7 @@ adb shell input text '<your key>'
 2. Run `python tools/build.py`.
 3. Paste `dist/Code.gs` and/or `dist/Index.html` into the project.
 4. **Deploy → Manage deployments → ✏ → Version: New version → Deploy.** The link and key stay the same.
-5. Tap the NEXUS logo on the tablet, or wait about 10 minutes.
+5. Tap the NEXUS logo on the tablet. Page changes (`Index`) load on the next page reload or at 03:30.
 
 ## 8. Troubleshooting
 
